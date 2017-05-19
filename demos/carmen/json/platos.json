@@ -1,0 +1,13 @@
+{
+	"0": {"nombre": "TARTARE DE RES", "descripcion": "chata madurada en seco por 21 días, escabeche de chipotle & zanahoria, almendras tostadas, miel & mostaza, burbujas de champagne, chips andinos", "precio": "29", "imagen": "TartarRes.jpg"},
+	"1": {"nombre": "PULPO ", "descripcion": "dorado a la plancha, polenta de ajo negro, mole de pistacho, aromáticas encurtidas, salsa de ponzu añeja avellanada, sal de chorizo", "precio": "37", "imagen": "pulpo_med.jpg"},
+	"2": {"nombre": "CARIMAÑOLAS", "descripcion": "yuca, centro líquido de foie gras & trufas negras, achiote, salsa bigarade de temporada, suero costeño", "precio": "39", "imagen": "carimanoles.jpg"},
+	"3": {"nombre": "PEZ NEGRO", "descripcion": "pesca del día sellada en aceite de oliva negro, agnolotti de papa criolla con suero costeño & trufas negras, kale negro, tomate rostizado, ensaladilla de alcachofas, vinagreta de trufas negras", "precio": "57", "imagen": "PezNegro.jpg"},
+	"4": {"nombre": "ATOLLADO", "descripcion": "morrillo braseado, cebada perlada, papa criolla aireada, hogao, huevo de codorniz, jus estofado", "precio": "29", "imagen": "atollado.jpg"},
+	"5": {"nombre": "CERDO 2 VECES", "descripcion": "solomito de cerdo cocinado en leche, chicharrón de 12 horas glaseado en tamarindo & panela, puré de camote, tubérculos andinos, habichuelas sichuan con vinagreta de jengibre & poleo, salsa de cerdo especiada", "precio": "48", "imagen": "Cerdo2Veces.jpg"},
+	"6": {"nombre": "ARROZ CON PATO", "descripcion": "carnitas de pato doradas a la plancha & glaseadas en agraz silvestre, arroz chaufa, espárragos, nabos braseados, jus de pato", "precio": "59", "imagen": "arrozconpato.jpg"},
+	"7": {"nombre": "TACOS DE TÉTE DE CHOCHON", "descripcion": "carnitas de cerdo braseadas en el horno de brasa, mole negro, salsa verde, tortillas verdes de yuca nixtamal, yacón encurtido, capuchinas", "precio": "26", "imagen": "porkneck_2.jpg"},
+	"8": {"nombre": "DE BAHÍA SOLANO", "descripcion": "pesca del día encostrada con plátano verde, risotto de arroz con coco, puré de murrapos al ron, salsa pasionaria (gulupa, curuba larga, maracuyá & granadilla), coriandros", "precio": "52", "imagen": "solano.jpg"},
+	"9": {"nombre": "SOLOMITO DE RES", "descripcion": "dorado al sartén de hierro, encostrado de tuétano & parmigiano reggiano, milhoja de papas nativas & guascas, “cremeux” de espinacas, setas orellanas rostizadas, salsa bordelaise", "precio": "51", "imagen": "solomito.jpg"},
+	"total": 10
+}

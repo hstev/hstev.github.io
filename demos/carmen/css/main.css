@@ -1,0 +1,303 @@
+@import url('https://fonts.googleapis.com/css?family=Cabin');
+
+:root{
+	--colorRed: #D91F26;
+	--colorWhite: #FFF;
+	--colorBlack: #000;
+	--fuenteCarmen: 'Cabin', sans-serif;
+	--imgFondo: url('../img/backgrounds/bg_negro.gif');
+}
+
+*{
+	font-family: var(--fuenteCarmen);
+}
+
+.closeDetail{
+	width: 40px;
+	height: 40px;
+	top: -10px;
+	right: -10px;
+	text-align: center;
+	color: var(--colorRed);
+	font-size: 30px;
+	position: absolute;
+	cursor: pointer;
+	background: var(--colorWhite);
+	border-radius: 100%;
+	-moz-border-radius: 100%;
+	-ms-border-radius: 100%;
+	-webkit-border-radius: 100%;
+}
+
+.modal .detalle{
+	width: 100%;
+	height: auto;
+	padding:10px;
+	box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	position: relative;
+}
+
+.modal img{
+	width: 100%;
+	height: 200px;
+}
+
+.btn{
+	background: var(--colorRed);
+	border-color:var(--colorRed);
+	color: var(--colorWhite);
+	font-size: 20px;
+	margin: auto;
+	cursor: pointer;
+}
+
+.btn2{
+	background: var(--colorRed);
+	border-color:var(--colorRed);
+	color: var(--colorWhite);
+	font-size: 20px;
+	cursor: pointer;
+}
+
+.beta{
+	background: var(--colorRed);
+	padding: 2px;
+	border-radius: 2px;
+	font-size: 12px;
+	margin-top: 10px;
+	margin-left: -10px;
+	position: absolute;
+}
+
+.colorWhite{
+	color:var(--colorWhite);
+}
+
+.colorRed{
+	color:var(--colorRed);
+}
+
+.colorBlack{
+	color:var(--colorBlack);
+}
+
+.preloader{
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: var(--colorBlack);
+	z-index: 10;
+	overflow-y: hidden;
+	transition: 1s;
+	padding-top: 100px;
+}
+
+.closePreloader{
+	transition: 1s;
+	display: none;
+}
+
+.cargando{
+	border:1px solid var(--colorWhite);
+	padding: 20px;
+	width: 200px;
+	text-align: center;
+	box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	height: auto;
+	position: relative;
+	margin: 20% auto 50px auto;
+	font-size: 30px;
+}
+
+body{
+	background-image: url('../img/backgrounds/bg_negro.gif');
+	background-repeat: repeat;
+}
+
+.contenedor{
+	width: 100%;
+	max-width: 960px;
+	height: auto;
+	position: relative;
+	margin: 60px auto;
+	padding: 0;
+}
+
+.imagen_plato{
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	box-sizing: border-box;
+	padding: 5px;
+}
+
+.imagen_plato:hover,
+.imagen_plato:target,
+.imagen_plato:focus{
+	background:var(--colorRed);
+}
+
+.plato_titulo{
+	color:var(--colorWhite);
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	padding: 10px;
+	text-shadow: 1px 1px 1px var(--colorRed);
+	-ms-text-shadow: 1px 1px 1px var(--colorRed);
+	-moz-text-shadow: 1px 1px 1px var(--colorRed);
+	-webkit-text-shadow: 1px 1px 1px var(--colorRed);
+}
+
+header{
+	position: fixed;
+	width: 100%;
+	height: 60px;
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	top: 0;
+	left: 0;
+	z-index: 9;
+	background-color: rgba(0,0,0,0.8);
+	-moz-background-color: rgba(0,0,0,0.8);
+	-webkit-background-color: rgba(0,0,0,0.8);
+	-ms-background-color: rgba(0,0,0,0.8);
+
+}
+
+header img{
+	position: relative;
+	padding: 13px 0;
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+}
+
+.fondo_modal{
+	width: 100%;
+	height: 100%;
+	top:0;
+	left: 0;
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#000000+75,7db9e8+100&1+0,0+100 */
+	background: -moz-linear-gradient(top, rgba(0,0,0,1) 0%, rgba(0,0,0,0.25) 75%, rgba(125,185,232,0) 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top, rgba(0,0,0,1) 0%,rgba(0,0,0,0.25) 75%,rgba(125,185,232,0) 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom, rgba(0,0,0,1) 0%,rgba(0,0,0,0.25) 75%,rgba(125,185,232,0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#007db9e8',GradientType=0 ); /* IE6-9 */
+	position: fixed;
+	z-index: 11;
+	display: none;
+}
+
+.campos{
+	width: 80%;
+	height: 30px;
+	position: relative;
+	margin: 5px 0;
+	text-align: center;
+}
+
+#mapa{
+	width: 100%;
+	min-height: 200px;
+	height: auto;
+	background: var(--colorRed);
+}
+
+@media (min-width:298px)  { 
+/* smartphones, iPhone, portrait 480x320 phones */ 
+	.card_plato{
+		width: 100%;
+		height: 200px;
+		position: relative;
+		box-sizing: border-box;
+		margin:5px 0;
+	}   
+	.modal{
+		width: 97%;
+		margin: auto;
+		height: auto;
+		min-height:300px;
+		position: fixed;
+		top: 80px;
+		left: 0;
+		background-color: #FFF;
+		z-index: 11;
+		box-sizing: border-box;
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		-ms-box-sizing: border-box;
+	}
+}
+@media (min-width:700px) {
+/* big landscape tablets, laptops, and desktops */
+	.contenedor{
+		max-width: 100%;
+	}
+
+	.card_plato{
+		width: 50%;
+		height: 200px;
+		position: relative;
+		box-sizing: border-box;
+		margin:0;
+		float: left;
+	}  
+
+	.modal{
+		width: 50%;
+		margin: auto;
+		height: auto;
+		min-height:300px;
+		position: fixed;
+		top: 80px;
+		left: 25%;
+		background-color: #FFF;
+		z-index: 11;
+		box-sizing: border-box;
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		-ms-box-sizing: border-box;
+	}
+}
+
+@media (min-width:1366px) {
+/* big landscape tablets, laptops, and desktops */
+	.contenedor{
+		max-width: 1366px;
+	}
+
+	.card_plato{
+		width: 50%;
+		height: 200px;
+		position: relative;
+		box-sizing: border-box;
+		margin:0;
+		float: left;
+	}  
+
+	.modal{
+		width: 50%;
+		margin: auto;
+		min-height:300px;
+		position: fixed;
+		top: 80px;
+		left: 25%;
+		background-color: #FFF;
+		z-index: 11;
+		box-sizing: border-box;
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		-ms-box-sizing: border-box;
+	}
+}
