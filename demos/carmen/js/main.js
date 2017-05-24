@@ -73,16 +73,18 @@ function ordenar(id, element){
 					'<center>'+
 					'<p>'+carmenObjt.mostrarFecha()+'</p>'+
 					'<small>Pedido [<b>'+prod+'</b>], Necesitamos que completes los siguientes campos</small>'+
-						'<form>'+
-							'<input type="text" id="nombre" placeholder="nombre" class="campos" require>'+
-							'<input type="number" name="contacto" class="campos" placeholder="telefono o celular" require>'+
+						'<form method="post" action="envio.jsp">'+
+							'<input type="hidden" id="producto" name="producto" placeholder="nombre" class="campos" value="'+prod+'">'+
+							'<input type="text" id="nombre" id="nombre" placeholder="nombre" class="campos">'+
+							'<input type="number" id="telefono" name="telefono" class="campos" placeholder="telefono o celular">'+
 							'<br>'+
 							'<small>Utiliza el mapa para tener una direccion mas precisa.</small>'+
-							'<input type="text" id="address" class="campos" placeholder="direccion"><br><input type="hidden" id="lat" size="50"><input type="hidden" id="lng" size="50">'+
+							'<input type="text" id="address" name="address" class="campos" placeholder="direccion"><br><input type="hidden" id="lat" name="lat" size="50"><input type="hidden" id="lng" name="lng" size="50">'+
     						'<div id="mapa"></div>'+
 							'<br>'+
+							'<input type="submit" value="Aceptar">'+
 						'</form>'+
-						'<button class="btn2" onclick="noDisponible()">Aceptar</button>'+
+						
 					'</center>'+
 					'<br>'+
 					'<br>';

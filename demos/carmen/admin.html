@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<title>Administracion - Pedidos</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<meta name="author" content="">
+		<meta name="description" content="">
+		<meta name="keywords" content="">
+    <link rel="shortcut icon" href="img/favicon.ico" />
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
+		<link rel="stylesheet" href="https://bootswatch.com/lumen/bootstrap.min.css">
+		<link href="https://fonts.googleapis.com/css?family=Fira+Sans+Condensed" rel="stylesheet">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	</head>
+	<body>
+		<div class="container">
+			<div class="row">
+          <div class="col-lg-12">
+            <div class="page-header">
+              <h1 id="tables">Pedidos</h1>
+            </div>
+
+            <div class="bs-component">
+              <table class="table table-striped table-hover ">
+                <thead>
+                  <tr>
+                    <th>CodPedido</th>
+                    <th>Producto</th>
+                    <th>Nombre</th>
+                    <th>Telefono</th>
+                    <th>Direccion</th>
+                    <th>Lat</th>
+                    <th>Long</th>
+                  </tr>
+                </thead>
+                <tbody id="confirmarP">
+                  <tr>
+                    <td>ABC123</td>
+                    <td>TARTARA DE RES</td>
+                    <td>Pastora Lopez</td>
+                    <td>224-58-62</td>
+                    <td>Calle 80 # 100 - Av 12</td>
+                    <td>-52.0000000000</td>
+                    <td>-52.0000000000</td>
+                  </tr>
+                  <tr>
+                    <td>ABC123</td>
+                    <td>TARTARA DE RES</td>
+                    <td>Pastora Lopez</td>
+                    <td>224-58-62</td>
+                    <td>Calle 80 # 100 - Av 12</td>
+                    <td>-52.0000000000</td>
+                    <td>-52.0000000000</td>
+                  </tr>
+                  <tr>
+                    <td>ABC123</td>
+                    <td>TARTARA DE RES</td>
+                    <td>Pastora Lopez</td>
+                    <td>224-58-62</td>
+                    <td>Calle 80 # 100 - Av 12</td>
+                    <td>-52.0000000000</td>
+                    <td>-52.0000000000</td>
+                  </tr>
+                  <tr>
+                    <td>ABC123</td>
+                    <td>TARTARA DE RES</td>
+                    <td>Pastora Lopez</td>
+                    <td>224-58-62</td>
+                    <td>Calle 80 # 100 - Av 12</td>
+                    <td>-52.0000000000</td>
+                    <td>-52.0000000000</td>
+                  </tr>
+                  <tr>
+                    <td>ABC123</td>
+                    <td>TARTARA DE RES</td>
+                    <td>Pastora Lopez</td>
+                    <td>224-58-62</td>
+                    <td>Calle 80 # 100 - Av 12</td>
+                    <td>-52.0000000000</td>
+                    <td>-52.0000000000</td>
+                  </tr>
+                  <tr>
+                    <td>ABC123</td>
+                    <td>TARTARA DE RES</td>
+                    <td>Pastora Lopez</td>
+                    <td>224-58-62</td>
+                    <td>Calle 80 # 100 - Av 12</td>
+                    <td>-52.0000000000</td>
+                    <td>-52.0000000000</td>
+                  </tr>
+                  <tr>
+                    <td>ABC123</td>
+                    <td>TARTARA DE RES</td>
+                    <td>Pastora Lopez</td>
+                    <td>224-58-62</td>
+                    <td>Calle 80 # 100 - Av 12</td>
+                    <td>-52.0000000000</td>
+                    <td>-52.0000000000</td>
+                  </tr>
+                  <tr>
+                    <td>ABC123</td>
+                    <td>TARTARA DE RES</td>
+                    <td>Pastora Lopez</td>
+                    <td>224-58-62</td>
+                    <td>Calle 80 # 100 - Av 12</td>
+                    <td>-52.0000000000</td>
+                    <td>-52.0000000000</td>
+                  </tr>
+                  <tr>
+                    <td>ABC123</td>
+                    <td>TARTARA DE RES</td>
+                    <td>Pastora Lopez</td>
+                    <td>224-58-62</td>
+                    <td>Calle 80 # 100 - Av 12</td>
+                    <td>-52.0000000000</td>
+                    <td>-52.0000000000</td>
+                  </tr>
+                </tbody>
+              </table> 
+            <div id="source-button" class="btn btn-primary btn-xs" style="display: none;">&lt; &gt;</div></div><!-- /example -->
+          </div>
+        </div>			
+		</div>
+    <script type="text/javascript">
+      $("#confirmarP tr").click(function(){
+          if(confirm("¿Confirmar envio de producto?")){
+            $(this).attr("class", "success");
+          }else{
+            $(this).removeClass();
+          }
+          
+        })
+    </script>
+	</body>
+</html>

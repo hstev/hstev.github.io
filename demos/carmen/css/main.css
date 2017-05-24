@@ -242,7 +242,7 @@ header img{
 @media (min-width:700px) {
 /* big landscape tablets, laptops, and desktops */
 	.contenedor{
-		max-width: 100%;
+		max-width: 800px;
 	}
 
 	.card_plato{
@@ -274,7 +274,7 @@ header img{
 @media (min-width:1366px) {
 /* big landscape tablets, laptops, and desktops */
 	.contenedor{
-		max-width: 1366px;
+		max-width:800px;
 	}
 
 	.card_plato{
