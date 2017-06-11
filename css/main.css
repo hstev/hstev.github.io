@@ -1,9 +1,9 @@
 @import url('https://fonts.googleapis.com/css?family=Raleway');
 body{
-	background: #CCC;
-	background-image: url(../img/background.jpg);
-	background-size: cover;
+	background: url(../img/background.jpg);
 	background-repeat: no-repeat;
+	background-size: cover;
+	background-attachment: fixed;
 }
 
 *{
@@ -16,4 +16,10 @@ font-family: 'Raleway', sans-serif;
 
 .panel-custom .panel-body{
 	background: rgba(255,255,255,0.1);
+}
+
+.mybrand{
+	position: fixed;
+	bottom:0;
+	left: 0; 
 }
