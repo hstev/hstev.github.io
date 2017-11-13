@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Determinante con JavaScript</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <style type="text/css">
+            table tr td{
+                padding:5px;
+            }
+            
+            input, #letra{
+                font-size:50px;
+                text-align:center;
+            }
+            
+            *{
+                font-family:monospace;
+            }
+            
+           
+        </style>
+    </head>
+    <body>
+        
+        <center>
+                <select onchange="crearMatriz(this.value)" id="size">
+                    <option value="">Tamaño de la matriz</option>
+                    <option value="2">( 2 X 2)</option>
+                    <option value="3">( 3 x 3)</option>
+                </select>
+            <br>
+            <div id="matriz"></div>
+        </center>
+        <script type="text/javascript">
+            function crearMatriz(){
+                var size = document.getElementById("size").value;
+                if(size != ""){
+                    var cadena = '<p style="text-align:center;">A=</p>';
+                    for(var i = 1; i <= size; i++){
+                        for(var j = 1; j <= size; j++){
+                            if(j != size){
+                                cadena += '<input type="number" id="a'+i+j+'" style="width:100px; height:100px;">';
+                            }else{
+                                cadena += '<input type="number" id="a'+i+j+'" style="width:100px; height:100px;"><br>';
+                            }
+                        }
+                    }
+                    cadena += '<br>det(A) <button onClick="calcularDet('+size+')"> = </button> <span id="resultado"></span>';
+                    
+                    document.getElementById("matriz").innerHTML = cadena;
+                }
+            }
+            
+            function calcularDet(size){
+                var result;
+                if (size == 2){
+                    var a = document.getElementById("a11").value;
+                    var b = document.getElementById("a22").value;
+                    var c = document.getElementById("a12").value;
+                    var d = document.getElementById("a21").value;
+                    result = (a*b)-(c*d);
+                } else if (size == 3){
+                    var a = document.getElementById("a11").value;
+                    var b = document.getElementById("a12").value;
+                    var c = document.getElementById("a13").value;
+                    var d = document.getElementById("a21").value;
+                    var e = document.getElementById("a22").value;
+                    var f = document.getElementById("a23").value;
+                    var g = document.getElementById("a31").value;
+                    var h = document.getElementById("a32").value;
+                    var i = document.getElementById("a33").value;
+                    result = (((a*e*i)+(b*f*g)+(c*d*h))-((g*e*c)+(h*f*a)+(i*d*b)));
+                }
+                document.getElementById("resultado").innerHTML = result;
+            }
+        </script>
+    </body>
+</html>

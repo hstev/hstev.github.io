@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Area de un triangulo</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no">
+        <style type="text/css">
+            *{
+                font-family:monospace;
+            }
+            
+            input{
+                text-align:center;
+            }
+            
+           
+        </style>
+    </head>
+    <body>
+        <div class="dibujo-canvas">
+            <center>
+                <canvas id="lienzo1" width="300" height="300"></canvas>
+                <br><br>
+                Punto 1: (<input type="number" id="p1x" style="width:50px;" placeholder="x" />, <input type="number" id="p1y" style="width:50px;" placeholder="y"/>)<br><br>
+                Punto 2: (<input type="number" id="p2x" style="width:50px;" placeholder="x"/>, <input type="number" id="p2y" style="width:50px;" placeholder="y"/>)<br><br>
+                Punto 3: (<input type="number" id="p3x" style="width:50px;" placeholder="x"/>, <input type="number" id="p3y" style="width:50px;" placeholder="y"/>)<br><br>
+                Area <button onClick="calcular()"> = </button> <span id="spanA"></span>
+            </center>
+        </div>
+    <script type="text/javascript">
+ejercicio1();
+      function ejercicio1(){
+        ej1=document.getElementById("lienzo1"); 
+        lienzo1=ej1.getContext("2d");
+        lienzo1.lineWidth=1;
+        lienzo1.strokeStyle = '#000'; 
+ 
+      //EJEX
+        lienzo1.beginPath(); 
+        lienzo1.moveTo(150,0); 
+        lienzo1.lineTo(150,300);
+        lienzo1.fill();
+        lienzo1.stroke(); 
+        
+        lienzo1.closePath(); 
+      //EJE Y
+        lienzo1.beginPath(); 
+        lienzo1.moveTo(0,150);
+        lienzo1.lineTo(300,150);
+        lienzo1.stroke();
+        lienzo1.closePath();
+       }
+       
+       function cordenada(x,y){
+           ej1=document.getElementById("lienzo1"); 
+            lienzo1=ej1.getContext("2d");
+             lienzo1.lineWidth=1;
+            lienzo1.strokeStyle = '#000'; 
+            lienzo1.beginPath(); 
+        lienzo1.moveTo(x,y); 
+        lienzo1.lineTo(x,y);
+        lienzo1.stroke(); 
+        lienzo1.closePath(); 
+       }
+       
+       function calcular(){
+          ej1=document.getElementById("lienzo1"); 
+        lienzo1=ej1.getContext("2d");
+        lienzo1.lineWidth=1;
+        lienzo1.strokeStyle = 'rgba(0,0,0,0)'; 
+          var p1x = document.getElementById("p1x").value;
+          var p1y = document.getElementById("p1y").value;
+          var p2x = document.getElementById("p2x").value;
+          var p2y = document.getElementById("p2y").value;
+          var p3x = document.getElementById("p3x").value;
+          var p3y = document.getElementById("p3y").value;
+        lienzo1.beginPath();
+        lienzo1.moveTo(p1x, p2y);
+        lienzo1.lineTo(p2y, p2y);
+        lienzo1.lineTo(p3x, p3y);
+        lienzo1.stroke(); 
+        lienzo1.fillStyle = "rgba(0,200,0,0.5)";
+        lienzo1.fill();
+        lienzo1.closePath();
+        
+        result = (((p1x*(p2y-p3y))+(p2x*(p3y-p1y))+(p3x*(p1y-p2y)))/2);
+        //result = (((p1x*p2y)+(p2x*p3y)+(p3x*p1y))-((p1y*p2x)+(p2y*p3x)+(p3y*p1x))/2);
+        document.getElementById("spanA").innerHTML = Math.abs(result)+" u^2";
+       }
+    </script>
+    </body>
+</html>
