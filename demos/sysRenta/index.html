@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<title>Login</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="author" content="">
+		<meta name="description" content="">
+		<meta name="keywords" content="">
+		<link rel="stylesheet" href="view/libs/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="view/libs/fontawesome/css/fontawesome-all.min.css">
+		<link rel="stylesheet" href="view/libs/alertifyjs/css/themes/default.min.css">
+		<link rel="stylesheet" href="view/libs/alertifyjs/css/alertify.min.css">
+		<link rel="stylesheet" href="view/css/index.css">
+		<link rel="shortcut icon" href="view/img/car.png">
+		<script src="view/libs/jquery/jquery-3.3.1.min.js"></script>
+		<script src="view/libs/bootstrap/js/bootstrap.min.js"></script>
+		<script src="view/libs/alertifyjs/alertify.min.js"></script>	
+		<script src="view/js/config.js"></script>
+		<script src="view/js/user.js"></script>
+	</head>
+	<body>
+		<div class="container">
+  			<div class="row">
+  				<div class="col-md-4 offset-md-4">
+  					<form class="form-signin">
+						<center><img class="mb-4" src="view/img/car.png"></center>
+				    	<h1 class="h3 mb-3 font-weight-normal">Renta de vehiculos</h1>
+				    	<label for="inputEmail" class="sr-only">Identificación</label>
+				    	<input type="email" id="usuario" class="form-control" placeholder="Nombre de usuario" required autofocus>
+				    	<label for="inputPassword" class="sr-only">Contraseña</label>
+				    	<input type="password" id="password" class="form-control" placeholder="Contraseña" required>
+				    	<br>
+				    	<button class="btn btn-lg bg-primary text-light btn-block" type="button" onclick="login()">Ingresar</button>
+				    	<p class="mt-5 mb-3 text-muted text-center">&copy; 2018</p>
+				    </form>
+  				</div>
+  			</div>
+		</div>	
+		<script src="js/config.js"></script>
+		<script src="js/user.js"></script>
+	</body>
+</html>

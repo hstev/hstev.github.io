@@ -1,0 +1,46 @@
+<div id="frmCliente">
+<div class="row">
+	<div class="col-md-8 offset-md-2">
+		<label>Ingrese el numero de documento</label>
+		<div class="input-group mb-3">
+  <input type="number" class="form-control" id="doc">
+  <div class="input-group-append">
+  	<button class="btn btn-primary" onclick="Comprobar()"><i class="fa fa-search"></i> Comprobar</button>
+  </div>
+</div>
+	<br>
+	<div id="campos" style="display: none;">
+		<label>Documento</label>
+		<input type="text" name="" class="form-control" id="docN">
+		<label>Nombre</label>
+		<input type="text" name="" class="form-control">
+		<label>Apellido</label>
+		<input type="text" name="" class="form-control">
+		<label>Fecha de nacimiento</label>
+		<input type="date" name="" class="form-control">
+		<label>Licencia</label>
+		<input type="text" name="" class="form-control">
+		<br>
+		<center>
+		<button class="btn btn-primary" onclick="RegistrarCliente()">Registrar</button>
+		</center>
+	</div>
+	</div>
+</div>
+-</div>
+<script type="text/javascript">
+	function Comprobar(){
+		var doc = $("#doc").val();
+		alertify.notify("El cliente "+doc+" no se encuentra registrado en el sistema");
+		$("#doc").val("");
+		$("#docN").val(doc);
+		$("#campos").css("display", "block");
+	}
+
+	function RegistrarCliente(){
+		$("#frmCliente").css("display", "none");
+		alertify.success("Cliente registrado con exito");
+	}
+
+	
+</script>
