@@ -15,19 +15,24 @@
         <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<style type="text/css">
+		body{
+			background: #F2F2F2;
+
+		}
 
 			h1,h2,h3,h4,h5,h6{
-				font-family: 'Spectral SC', serif;
+				font-family: monospace;
+				color: #000;
 			}
 
 			p{
-				font-family: 'Ubuntu', sans-serif;
+				font-family: monospace;
 			}
 
 			.status{
 				font-size:15px;
 				position: absolute;
-				margin-left: 80px;
+				margin-left: 100px;
 				margin-top: -20px;
 			}
 
@@ -64,37 +69,34 @@
 				font-size: 50px;
 				line-height: 400px;
 			}
+
+			.photo{
+				border: 2px solid #000;
+			}
 		</style>
 	</head>
 	<body>
 		<div class="card">
 			<h1>
-				<img src="pic.gif" class="img-responsive img-circle">
-				<span class="status"><i class="fa fa-circle text-success"></i> <b>Conectado</b></span>
+				<img src="photo.jpg" width="100" class="img-responsive img-circle photo">
+				<span class="status"><code class="text-info"><i class="fa fa-terminal"></i> Absorbiendo conocimiento... *%</code></span>
 				<ul class="list-inline socialMedia">
-					<li><a href="#"><i class="fa fa-github"></i></a></li>
-					<li><a href="#"><i class="fa fa-twitter"></i></a></li>
-					<li><a href="#"><i class="fa fa-instagram"></i></a></li>
-					<li><a href="#"><i class="fa fa-steam"></i></a></li>
-					<li><a href="#"><i class="fa fa-envelope-o"></i></a></li>
+					<li><a href="https://github.com/hstev"><i class="fa fa-github"></i></a></li>
+					<li><a href="https://twitter.com/_hstev"><i class="fa fa-twitter"></i></a></li>
+					<li><a href="https://codepen.io/hstev/"><i class="fa fa-codepen"></i></a></li>
 				</ul>
 				Harold Restrepo <span class="location"><i class="fa fa-map-marker"></i> Medellín, Colombia</span><br>
-				<small>Programador Informatico</small>
+				<small>Programador Informático</small>
 			</h1>
 		</div>
 		<div class="container">
 			<div class="row">
 				<div class="col-md-4 col-md-offset-4">
-					<h2 class="text-center" id="putSomething">HSTEV</h2>
+					<h2 class="text-center" id="putSomething">H<kbd>S</kbd>TEV</h2>
 				</div>
 			</div>
 		</div>
 		<script>
-			 var txtLogo = 'H<kbd>S</kbd>TEV'; 
-				setTimeout(function(){
-			 	document.getElementById("putSomething").innerHTML = txtLogo;
-			 }, 1000);
-				
 			//Start of Tawk.to Script
 			
 			var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();

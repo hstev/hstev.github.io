@@ -1,0 +1,133 @@
+<div id="frmVehiculo">
+<center>
+		<img src="view/img/silueta.png" class="img-fluid img-circle" id="touchSilueta" onclick="seleccionarFotoVehiculo()" style="width:150px; border-radius:100%;"></img>
+		<input type="file" id="imgCarro" style="display:none;" onchange="mostrarFotoVehiculo()" />
+	</center>
+	<br>	
+	<div class="alert alert-info">
+		<i class="fa fa-exclamation"></i> Primero seleccione una foto para el vehiculo haciendo click sobre la silueta <i class="fa fa-hand-pointer"></i>
+	</div>
+	<div id="campos" style="display: none;">
+	<div class="row">
+		<div class="col-md-4 offset-md-2">
+			<label for="">Precio</label>
+			<input type="text"  class="form-control"/>
+			<label for="">Aire acondicionado</label>
+			<input type="text"  class="form-control"/>
+			<label for="">Cantidad de pasajeros</label>
+			<input type="text"  class="form-control"/>
+			<label for="">Categoria</label>
+			<input type="text"  class="form-control"/>
+			<label for="">Combustible</label>
+			<input type="text"  class="form-control"/>
+			<label for="">Numero de puertas</label>
+			<input type="text"  class="form-control"/>
+		</div>
+		<div class="col-md-4">
+			<label for="">Porta equipaje</label>
+			<input type="text"  class="form-control"/>
+			<label for="">Precio</label>
+			<input type="text"  class="form-control"/>
+			<label for="">Radio</label>
+			<input type="text"  class="form-control"/>
+			<label for="">Sistema frenos</label>
+			<input type="text"  class="form-control"/>
+			<label for="">Traccion</label>
+			<input type="text"  class="form-control"/>
+			<label for="">Vidrio electrico</label>
+			<input type="text"  class="form-control"/>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col">
+			<center>
+				<br>
+				<button class="btn btn-primary btn-sm" onclick="guardar()"><i class="fa fa-save"></i> Guardar</button>
+			</center>
+			<br>
+		</div>
+	</div>
+	</div>
+</div>
+<script type="text/javascript">
+	
+		function guardar(){
+			$("#frmVehiculo").css("display", "none");
+			alertify.success("Se ha ingresado un nuevo vehiculo");
+		}
+		
+		function seleccionarFotoVehiculo(){
+			$("#imgCarro").click();
+			alertify.notify("Elije una imagen en formato *jpg");
+		}
+
+
+		function mostrarFotoVehiculo(){
+			var urlImgLocal = "";
+			var input = document.getElementById("imgCarro");
+			if (input.files && input.files[0]) {
+		    var reader = new FileReader();		
+		    reader.onload = function(e) {
+		    	$("#touchSilueta").attr("src", e.target.result);
+		    }		
+		    reader.readAsDataURL(input.files[0]);
+			}
+
+			$("#campos").css("display", "block");
+		}
+
+		function GuardarVehiculo_btnClick(){
+			
+			var errores =  0;
+			var almacena = "";
+			var sizeArray = $('#IngresarVehiculoFRM #'+secName).length;
+			$('#IngresarVehiculoFRM #'+secName).each( 
+			    function(index){		    	   
+			        var input = $(this);		       	
+			        if (input.val() != "") {
+			        	
+			        	if (index == 0 || index == (sizeArray-1)) {
+			        		almacena += input.val();
+			        	} else {
+			        		almacena += input.val()+",";
+			        	}	        	
+			        } else {
+			        	errores++;
+			        	$(this).trigger('focus');
+			        	
+			        	imprimirMensaje("Hay campos sin completar");
+			        	return false;
+			        }
+			    }
+			);
+
+			if (errores == 0) {
+				GuardarVehiculo(almacena);
+			} else {
+				almacena == "";
+			}			
+		}
+
+		function GuardarVehiculo(strn){
+			DatosVehiculo = JSON.parse(strn);			
+			$.ajax({
+		    url:almacen+"",
+		    type:'POST',
+		    dataType: 'json',
+		    contentType:false,
+		    data:datas,
+		    processData:false,
+		    cache:false    
+			}).done(function(response) {
+				imprimirMensaje(response);
+			}).fail(function(response){
+				imprimirMensaje(response);
+			});
+		}
+
+		function imprimirMensaje(response){
+			alertify(response);
+		}
+
+	
+</script>

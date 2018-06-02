@@ -1,21 +1,83 @@
-<div class="col-md-8 offset-md-2">
+<div class="col-md-12">
+	<div class="alert alert-default">
 	<center>
-		<div class="btn-group" role="group" aria-label="Basic example">
-		  <button type="button" class="btn btn-lg btn-secondary"><i class="fa fa-list"></i> Generar Listado Vehiculos</button>
-		  <button type="button" class="btn btn-lg btn-secondary" onclick="IngresaVehiculo()"><i class="fa fa-plus"></i> Ingresar vehiculo</button>
-		</div>
+		<input type="text" class="text-center" name="" placeholder="Estado">
+	<input type="text" class="text-center" name="" placeholder="Gama">
+	<input type="text" class="text-center" name="" placeholder="Marca">
+	<input type="text" class="text-center" name="" placeholder="Capacidad">
+	<input type="text" class="text-center" name="" placeholder="Color">
+	<input type="text" class="text-center" name="" placeholder="Transmision">
+	<input type="text" class="text-center" name="" placeholder="Tipo de carrocería">
 	</center>
-<br>
-<div style="display:none;" id="wrap">
-	
-	</div>
+	<br>
+	<input type="submit" value="Consultar Vehiculos" class="btn btn-sm btn-primary float-right">
+	<br>
+</div>
+<div class="table-repsonsive">
+	<table class="table table-bordered table-striped">
+		<thead class="bg-dark text-light">
+			<th class="text-center">Estado</th>
+			<th class="text-center">Gama</th>
+			<th class="text-center">Marca</th>
+			<th class="text-center">Capacidad</th>
+			<th class="text-center">Color</th>
+			<th class="text-center">Transmision</th>
+			<th class="text-center">Tipo de Carroceria</th>
+			<th class="text-center"><i class="fa fa-plus"></i></th>
+		</thead>
+		<tbody align="center">
+			<tr>
+				<td><i class="fa fa-circle text-success"></i> Disponible</td>
+				<td>ALTA</td>
+				<td>CHEVROLET</td>
+				<td>4 PASAJEROS</td>
+				<td>GRIS</td>
+				<td>MANUAL</td>
+				<td>CUPÉ</td>
+				<td><div class="badge"><i class="fa fa-eye"></i> Ver más</div></td>
+			</tr>
+			<tr>
+				<td><i class="fa fa-circle text-danger"></i> NO DISPONIBLE</td>
+				<td>MEDIA</td>
+				<td>CHEVROLET</td>
+				<td>4 PASAJEROS</td>
+				<td>GRIS</td>
+				<td>MANUAL</td>
+				<td>CUPÉ</td>
+				<td><div class="badge"><i class="fa fa-eye"></i> Ver más</div></td>
+			</tr>
+			<tr>
+				<td><i class="fa fa-circle text-danger"></i> NO DISPONIBLE</td>
+				<td>MEDIA</td>
+				<td>CHEVROLET</td>
+				<td>4 PASAJEROS</td>
+				<td>GRIS</td>
+				<td>MANUAL</td>
+				<td>CUPÉ</td>
+				<td><div class="badge"><i class="fa fa-eye"></i> Ver más</div></td>
+			</tr>
+			<tr>
+				<td><i class="fa fa-circle text-danger"></i> NO DISPONIBLE</td>
+				<td>MEDIA</td>
+				<td>CHEVROLET</td>
+				<td>4 PASAJEROS</td>
+				<td>GRIS</td>
+				<td>MANUAL</td>
+				<td>CUPÉ</td>
+				<td><div class="badge"><i class="fa fa-eye"></i> Ver más</div></td>
+			</tr>
+			<tr>
+				<td><i class="fa fa-circle text-success"></i> DISPONIBLE</td>
+				<td>MEDIA</td>
+				<td>CHEVROLET</td>
+				<td>4 PASAJEROS</td>
+				<td>GRIS</td>
+				<td>AUTOMATICO</td>
+				<td>CUPÉ</td>
+				<td><div class="badge"><i class="fa fa-eye"></i> Ver más</div></td>
+			</tr>
+		</tbody>
+	</table>
+</div>
 </div>
 
-<script type="text/javascript">
-	
-
-	function IngresaVehiculo(){
-		$("#wrap").load("IngresarVehiculoFRM.html").css("display", "block");
-	}	
-	
-</script>

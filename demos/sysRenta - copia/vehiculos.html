@@ -1,0 +1,21 @@
+<div class="col-md-8 offset-md-2">
+	<center>
+		<div class="btn-group" role="group" aria-label="Basic example">
+		  <button type="button" class="btn btn-lg btn-secondary"><i class="fa fa-list"></i> Generar Listado Vehiculos</button>
+		  <button type="button" class="btn btn-lg btn-secondary" onclick="IngresaVehiculo()"><i class="fa fa-plus"></i> Ingresar vehiculo</button>
+		</div>
+	</center>
+<br>
+<div style="display:none;" id="wrap">
+	
+	</div>
+</div>
+
+<script type="text/javascript">
+	
+
+	function IngresaVehiculo(){
+		$("#wrap").load("IngresarVehiculoFRM.html").css("display", "block");
+	}	
+	
+</script>
