@@ -46,13 +46,11 @@
             <span id="nick" class="animated tada">H S T 3 V</span>
         </div>
     
-    <!--  audio from https://media.defcon.org/DEF%20CON%2026/DEF%20CON%2026%20music/DEF%20CON%2026%20mp3/DEF%20CON%2026%20-%2002%20-%20Dual%20Core%20-%20Apex%20Predator%20(featuring%20Tribe%20One).mp3 -->
     <audio autoplay>
         <source src="DEFCON26-02-DualCore-ApexPredator.mp3">
     </audio>
 
     <script>
-        //pen from https://codepen.io/anon/pen/aaGjrz
 
         const canvas = document.getElementById('c1');
         const c = canvas.getContext('2d');
@@ -129,15 +127,15 @@
             //Running Streaks
             for (let i = 0; i < s.length; i++) s[i].run();
         }
-        draw();
-
-        
-            var nick = document.getElementById("nick");
-            
-            setInterval(function(){
+        var nick = document.getElementById("nick");
+        window.onload = function(){
+           draw(); 
+           setInterval(function(){
                 nick.style.display = "block";
                 nick.style.color = "#005200";
             }, 7000);
+        }          
+
         
     </script>
 </body>

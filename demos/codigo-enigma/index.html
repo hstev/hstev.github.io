@@ -8,8 +8,9 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Slabo+27px">
     <style type="text/css">
     	*{
-		  font-family: 'Slabo 27px', serif;
+		  font-family: 'Orbitron', sans-serif;
 		}
+
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.js"></script>
@@ -18,81 +19,111 @@
   </head>
   <body>
     <div class="container">
-	  <div class="row">
-	    <div class="col">
-	      <h1 class="">Codigo enigma <small>/ Crypto-js</small></h1> 
-	    </div>
-	  </div>
-	  <div class="row">
-	    <div class="col-md-6">     
-	      <form id="formEncrypt" onsubmit="return false;">
-	        <label>Texto a encriptar</label>
-	          <textarea id="txtEncrypt" rows="3" class="form-control"></textarea>
-	        <br>
-	         <div class="input-group">
-	          <span class="input-group-prepend">
-	            <span class="input-group-text"><i class="fa fa-lock"></i></span>
-	          </span>
-	          <input type="password" class="form-control" id="claveEncrypt" placeholder="Clave para cifrar el mensaje">
-	        </div>
-	        <br>
-	        <button class="btn btn-secondary d-block mx-auto" id="btnEncrypt"><i class="fa fa-lock"></i> Encriptar mensaje</button>
-	        <br>
-	        <div class="input-group">
-	          <span class="input-group-prepend">
-	            <span class="input-group-text">SHA256:</span>
-	          </span>
-	          <input type="text" class="form-control" id="sha256">
-	        </div>
-	      </form>
-	    </div>
-	    <div class="col-md-6">
-	      <form id="formDescrypt" onsubmit="return false;">
-	        <label>Texto a desencryptar:</label>
-	          <textarea id="txtDesCrypt" rows="3" class="form-control"></textarea>
-	          <br>
-	         <div class="input-group">
-	          <span class="input-group-prepend">
-	            <span class="input-group-text"><i class="fa fa-lock"></i></span>
-	          </span>
-	          <input type="password" class="form-control" id="claveDescrypt" placeholder="Clave usada para encryptar este mensaje">
-	        </div>
-	        <br>
-	        <button class="btn btn-secondary d-block mx-auto" id="btnDesCrypt"><i class="fa fa-unlock"></i> Desencriptar mensaje</button>
-	        <br>
-	        <div class="input-group">
-	          <span class="input-group-prepend">
-	            <span class="input-group-text">Texto:</span>
-	          </span>
-	          <textarea row="2" class="form-control" id="texto"></textarea>
-	        </div>
-	      </form>
-	    </div>
-	  </div>
-	  <hr>
-	  <div class="row">
-	    <div class="col">
-	       <center>&copy; hstev - 2018, thanks to <a href="https://www.npmjs.com/package/crypto-js" target="_blank">crypto-js</a></center>
-	    </div>
-	  </div>
-	</div>
+  <div class="row">
+    <div class="col">
+      <h1 class="text-success">
+        Encrypt <span class="text-secondary">&</span> Decrypt
+        <div class="col-md-2">
+          <select class="form-control" onchange="setLanguage(this)">
+            <option id="0">Language</option>
+            <option id="1">Español</option>
+            <option id="2">English</option>
+          </select>
+        </div>
+      </h1> 
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">     
+      <form id="formEncrypt" onsubmit="return false;">
+        <label>Text to encrypt</label>
+          <textarea id="txtEncrypt" rows="3" class="form-control"></textarea>
+        <br>
+         <div class="input-group">
+          <span class="input-group-prepend">
+            <span class="input-group-text"><i class="fa fa-lock"></i></span>
+          </span>
+          <input type="password" class="form-control" id="claveEncrypt" placeholder="Key">
+        </div>
+        <br>
+        <button class="btn btn-secondary d-block mx-auto" id="btnEncrypt"><i class="fa fa-lock"></i> Encrypt</button>
+        <br>
+        <div class="input-group">
+          <span class="input-group-prepend">
+            <span class="input-group-text">SHA256:</span>
+          </span>
+          
+          <textarea row="2" class="form-control" id="sha256"></textarea>
+        </div>
+      </form>
+    </div>
+    <div class="col-md-6">
+      <form id="formDescrypt" onsubmit="return false;">
+        <label>Text to decrypt:</label>
+          <textarea id="txtDesCrypt" rows="3" class="form-control"></textarea>
+          <br>
+         <div class="input-group">
+          <span class="input-group-prepend">
+            <span class="input-group-text"><i class="fa fa-lock"></i></span>
+          </span>
+          <input type="password" class="form-control" id="claveDescrypt" placeholder="Key">
+        </div>
+        <br>
+        <button class="btn btn-secondary d-block mx-auto" id="btnDesCrypt"><i class="fa fa-unlock"></i> Decrypt</button>
+        <br>
+        <div class="input-group">
+          <span class="input-group-prepend">
+            <span class="input-group-text">Texto:</span>
+          </span>
+          <textarea row="2" class="form-control" id="texto"></textarea>
+        </div>
+      </form>
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col">
+      <center>&copy; <a href="https://hstev.github.io">hstev</a> - 2018, thanks to <a href="https://www.npmjs.com/package/crypto-js" target="_blank">crypto-js</a></center>
+    </div>
+  </div>
+</div>
 	<script>
-    	$("#btnDesCrypt").click(function(e){
-		  e.preventDefault();
-		  var texto = $("#txtDesCrypt").val();
-		  var clave = $("#claveDescrypt").val();
-		  var bytes  = CryptoJS.AES.decrypt(texto, clave);
-		  var plaintext = bytes.toString(CryptoJS.enc.Utf8);
-		  $("#texto").val(plaintext);
-		});
+    	//Encrypt
+$("#btnEncrypt").click(function(e){
+  e.preventDefault();
+  var texto = $("#txtEncrypt").val();
+  var clave = $("#claveEncrypt").val();
+  
+  if(texto == "" || clave == ""){
+      alertify.error("Is necessary a text and key");
+  }else{
+    alertify.success("Encrypt success");
+    var ciphertext = CryptoJS.AES.encrypt(texto, clave);
+    $("#sha256").val(ciphertext);
+  }
+})
 
-		$("#btnEncrypt").click(function(e){
-		  e.preventDefault();
-		  var texto = $("#txtEncrypt").val();
-		  var clave = $("#claveEncrypt").val();  
-		  var ciphertext = CryptoJS.AES.encrypt(texto, clave);
-		  $("#sha256").val(ciphertext);
-		}); 
+//Decrypt
+$("#btnDesCrypt").click(function(e){
+  e.preventDefault();
+  var texto = $("#txtDesCrypt").val();
+  var clave = $("#claveDescrypt").val();
+  
+  if(texto == "" || clave == ""){
+    alertify.error("Is necessary a text and key");
+  }else{
+    alertify.success("Decrypt success");
+    var bytes  = CryptoJS.AES.decrypt(texto, clave);
+    var plaintext = bytes.toString(CryptoJS.enc.Utf8);
+    $("#texto").val(plaintext);
+  }
+  
+})
+
+
+
+
+ 
     </script>
   </body>
 </html>
