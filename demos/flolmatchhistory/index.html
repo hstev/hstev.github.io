@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta property="og:url" content="http://www.nytimes.com/2015/02/19/arts/international/when-great-minds-dont-think-alike.html" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Funny Summoner Match History" />
+    <meta property="og:description" content="Funny League of Legends Match History" />
+    <meta property="og:image" content="https://hstev.github.io/demos/flolmatchhistory/banner.jpg" />
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://bootswatch.com/4/slate/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Cinzel|Play|Russo+One|Volkhov&display=swap" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.11.4/build/css/alertify.min.css"/>
+    <!-- Default theme -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.11.4/build/css/themes/default.min.css"/>
+    <style>
+        h1 {
+            font-family: 'Cinzel', serif;
+        }
+
+        .score-text{
+            font-family: 'Volkhov', serif;
+        }
+        
+        /*font-family: 'Play', sans-serif;*/
+        
+        
+    </style>
+    <title>Funny League of Legends Match History</title>
+  </head>
+  <body>
+        
+    <div class="container-fluid">
+        <!--<div class="toast" data-autohide="false">
+        <div class="toast-header">
+            <strong class="mr-auto text-primary">Toast Header</strong>
+            <small class="text-muted">5 mins ago</small>
+            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">x</button>
+        </div>
+        <div class="toast-body">
+            Some text inside the toast body
+        </div>
+        </div>-->
+        <h1 class="text-center">MLG Summoner History</h1>
+        <div class="row">
+            <div class="col-6 offset-3">
+                <div class="input-group">
+                    <input type="text" id="summoner_name" class="form-control bg-primary text-light" placeholder="Type your Summoner Name">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary border-light" id="btn_search"><i class="fa fa-search"></i> Search</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+     
+        <!--  Toast
+            Click in each match to funny reaction
+        -->
+        <div class="row mt-2">
+            <div class="col">
+                <!--<ul class="list-group">
+                    <li class="list-group-item" style="cursor: pointer;">
+                        <span class="float-right align-middle"> 
+                            <span class="score-text">00/00/00</span>
+                            <img src="https://opgg-static.akamaized.net/images/lol/item/1043.png?image=w_22&v=1" alt="" class="img-fluid">
+                            <img src="https://opgg-static.akamaized.net/images/lol/item/1043.png?image=w_22&v=1" alt="" class="img-fluid">
+                            <img src="https://opgg-static.akamaized.net/images/lol/item/1043.png?image=w_22&v=1" alt="" class="img-fluid">
+                            <img src="https://opgg-static.akamaized.net/images/lol/item/1043.png?image=w_22&v=1" alt="" class="img-fluid">
+                            <img src="https://opgg-static.akamaized.net/images/lol/item/1043.png?image=w_22&v=1" alt="" class="img-fluid">
+                            <img src="https://opgg-static.akamaized.net/images/lol/item/1043.png?image=w_22&v=1" alt="" class="img-fluid">
+                        </span>
+                        <img src="https://opgg-static.akamaized.net/images/lol/champion/Tristana.png?image=w_46&v=1" alt="{champion_name}" class="rounded"> 
+                       
+                    </li>
+                </ul>-->
+            </div>
+        </div>
+        <div class="footer-copyright text-center py-3">
+                <p>Creadte with <i class="fa fa-heart text-danger"></i> by <a href="https://hstev.github.io">hstev</a> with <a href="https://developer.riotgames.com">Riot API</a></p>
+              </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.11.4/build/alertify.min.js"></script>
+    <script>
+    $(document).ready(function(){
+        $('.toast').toast('show');
+    });
+        alertify.YoutubeDialog || alertify.dialog('YoutubeDialog',function(){
+        var iframe;
+        return {
+            // dialog constructor function, this will be called when the user calls alertify.YoutubeDialog(videoId)
+            main:function(videoId){
+                //set the videoId setting and return current instance for chaining.
+                return this.set({ 
+                    'videoId': videoId
+                });
+            },
+            // we only want to override two options (padding and overflow).
+            setup:function(){
+                return {
+                    options:{
+                        //disable both padding and overflow control.
+                        padding : !1,
+                        overflow: !1,
+                    }
+                };
+            },
+            // This will be called once the DOM is ready and will never be invoked again.
+            // Here we create the iframe to embed the video.
+            build:function(){           
+                // create the iframe element
+                iframe = document.createElement('iframe');
+                iframe.frameBorder = "no";
+                iframe.width = "100%";
+                iframe.height = "100%";
+                // add it to the dialog
+                this.elements.content.appendChild(iframe);
+
+                //give the dialog initial height (half the screen height).
+                this.elements.body.style.minHeight = screen.height * .5 + 'px';
+            },
+            // dialog custom settings
+            settings:{
+                videoId:undefined
+            },
+            // listen and respond to changes in dialog settings.
+            settingUpdated:function(key, oldValue, newValue){
+                switch(key){
+                case 'videoId':
+                        iframe.src = "https://www.youtube.com/embed/" + newValue + "?enablejsapi=1&autoplay=1";
+                    break;   
+                }
+            },
+            // listen to internal dialog events.
+            hooks:{
+                // triggered when the dialog is closed, this is seperate from user defined onclose
+                onclose: function(){
+                    iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}','*');
+                },
+                // triggered when a dialog option gets update.
+                // warning! this will not be triggered for settings updates.
+                onupdate: function(option,oldValue, newValue){
+                    switch(option){
+                        case 'resizable':
+                            if(newValue){
+                                this.elements.content.removeAttribute('style');
+                                iframe && iframe.removeAttribute('style');
+                            }else{
+                                this.elements.content.style.minHeight = 'inherit';
+                                iframe && (iframe.style.minHeight = 'inherit');
+                            }
+                        break;    
+                    }    
+                }
+            }
+        };
+    });
+    //show the dialog
+    
+
+    $("#btn_search").click(function(e){
+        e.preventDefault();
+
+        if($("#summoner_name").val().toLowerCase() == "ypz")
+        {
+            alertify.alert("Lo sentimos :(", "Solo funciona con personas pro ");
+        }else if($("#summoner_name").val().toLowerCase() == "rodzack"){
+            alertify.alert("Lo sentimos :(", "La app no funciona con Musulmanes ");
+        }else if($("#summoner_name").val().toLowerCase() == "norgath"){
+            alertify.alert("Lo sentimos :(", "Este summoner es demasiado manco para tenerlo en el sistema");
+        }else if($("#summoner_name").val().toLowerCase() == "el chontaduro" || $("#summoner_name").val().toLowerCase() == "firulays"){
+        }else if($("#summoner_name").val().toLowerCase() == "navakov"){
+            alertify.alert("Lo sentimos :(", "La app no funciona con los 'Instic Sion'");
+        }else{
+            alertify.alert("Lo sentimos :(", "Todavía no está terminada");
+        }
+    });
+    
+    </script>
+  </body>
+</html>
