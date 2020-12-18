@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no">
+    <!-- Bootstrap CSS -->
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
+    <link rel="stylesheet" href="https://bootswatch.com/4/lux/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
+    <link rel="icon" href="icon.png" sizes="16x16">
+    <title>Toqueteo</title>
+  </head>
+  <body>
+  	<div class="container my-5">
+  		<div class="row">
+  			<div class="col-md-4 offset-md-4">
+	  				<p class="text-center"><i class="far fa-user"></i> Usuario de prueba | $ 0.00253 USD</p>
+  				<h1>Toqueteo <small class="badge bg-danger text-light"><span>Demo</span></small></h1>
+  				<div class="form-group">
+  					<label for="">Ingrese el PIN de su pareja</label>
+  					<input type="password" class="form-control form-control-lg text-center">
+  				</div>
+  				<button class="btn btn-lg btn-outline-primary d-block mx-auto" onclick="vibrar()"><i class="far fa-hand-point-up"></i> Enviar toque</button>
+  				<br>
+  				<ul class="list-group">
+  					<li class="list-group-item">
+  						<a href="#">Registrarse</a>
+  					</li>
+  					<li class="list-group-item">
+  						<a href="#">¿Comprar creditos?</a>
+  					</li>
+  					<li class="list-group-item">
+  						<a href="#">¿Como funciona?</a>
+  					</li>
+  				</ul>
+  				<p class="text-center my-3 text-muted"><i class="fab fa-chrome"></i> Compatible con chrome</p>
+  			</div>
+  		</div>
+  	</div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script>
+    	function vibrar() {
+		  // Vibrate for 500ms
+		  window.navigator.vibrate(500);
+		}
+    </script>
+  </body>
+</html>

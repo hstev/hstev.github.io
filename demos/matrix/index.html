@@ -3,22 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
-    <link href="https://fonts.googleapis.com/css?family=Vollkorn" rel="stylesheet"> 
-    <title>hst3v</title>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>hstev</title>
     <style>
     body{
         background:#000;
     }
     
     span{
-        font-family: "Vollkorn", monospace;
-        border: 5px solid #005200;
+        font-family: Arial, monospace;
+        border: 5px solid red;
         font-size: 50px;
-        padding: 5px 100px;
+        padding: 5px;
         background: #000;
         display: none;
+        opacity: 0.5;
+        color: red;
     }
 
     audio{
@@ -50,14 +51,13 @@
 </head>
 <body>
     <canvas id = "c1"></canvas>
-    <div class="container">
-            <span id="nick" class="animated tada">H S T 3 V</span>
-        </div>
-    
-    <audio autoplay>
-        <source src="DEFCON26-02-DualCore-ApexPredator.mp3">
-    </audio>
 
+    <div class="container">
+        <span id="nick" class="animated tada">ACCESS GRANTED</span>
+    </div>
+    <audio autoplay>
+        <source src="">
+    </audio>
     <script>
 
         const canvas = document.getElementById('c1');
@@ -137,11 +137,15 @@
         }
         var nick = document.getElementById("nick");
         window.onload = function(){
-           draw(); 
+           if(confirm("¿Quieres ver el demo?"))
+           {
+            document.querySelector("audio").src = "DEFCON26-02-DualCore-ApexPredator.mp3";
+            draw(); 
            setInterval(function(){
                 nick.style.display = "block";
-                nick.style.color = "#005200";
             }, 7000);
+           }
+           
         }          
 
         
