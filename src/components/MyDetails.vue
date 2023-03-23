@@ -8,19 +8,21 @@
     </div>
     <h3 class="mt-5">My Stack</h3>
     <div>
-        <v-chip-group>
-            <v-chip v-for="skill in me.stack">
-                {{ skill }}    
-            </v-chip>
-        </v-chip-group>
+        <v-chip class="ma-2" color="grey" v-for="skill in me.stack">
+            {{ skill }}    
+        </v-chip>
+    </div>
+    <h3 class="mt-5">Interest / Learning</h3>
+    <div>
+        <v-chip class="ma-2" color="grey" v-for="interest in me.interest">
+            {{ interest }}    
+        </v-chip>
     </div>
     <h3 class="mt-5">Languages</h3>
     <div>
-        <v-chip-group>
-            <v-chip v-for="language in me.languages">
-                {{ language }}    
-            </v-chip>
-        </v-chip-group>
+        <v-chip class="ma-2" color="grey" v-for="language in me.languages">
+            {{ language }}    
+        </v-chip>
     </div>
 
     <h3 class="mt-5 mb-3">Social</h3>

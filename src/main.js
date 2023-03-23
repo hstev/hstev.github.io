@@ -12,6 +12,9 @@ import '../src/assets/css/main.css'
 
 const app = createApp(App);
 const vuetify = createVuetify({
+  theme: {
+    defaultTheme: 'dark'
+  },
   components,
   directives,
   icons: {

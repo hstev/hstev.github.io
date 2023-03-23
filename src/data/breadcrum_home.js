@@ -5,7 +5,7 @@ const items = [
       href: 'https://hstev.github.io',
     },
     {
-      title: 'Index',
+      title: 'CV',
       disabled: true,
       href: '#',
     }
