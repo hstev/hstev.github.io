@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#ee7f2e">
+<title>Harol · Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --lcd-1: #f8a85a;      /* retroiluminación clara */
+    --lcd-2: #ec7c2c;      /* retroiluminación profunda */
+    --ink: #2b1306;        /* píxel encendido */
+    --ink-soft: rgba(43, 19, 6, .45);
+    --pixel: 'VT323', ui-monospace, 'Courier New', monospace;
+
+    /* escala tipográfica: crece con la pantalla */
+    --fs-status: clamp(1.25rem, 1rem + 1vw, 1.9rem);
+    --fs-body:   clamp(1.75rem, 1.3rem + 1.6vw, 2.8rem);
+    --fs-title:  clamp(1.9rem, 1.4rem + 1.8vw, 3rem);
+    --fs-item:   clamp(2.1rem, 1.5rem + 2.2vw, 3.6rem);
+    --fs-clock:  clamp(6rem, 3rem + 10vw, 13rem);
+    --fs-soft:   clamp(1.9rem, 1.4rem + 1.6vw, 2.8rem);
+    --px:        clamp(3px, .25rem, 5px); /* grosor de línea “píxel” */
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; }
+  body {
+    background: var(--lcd-2);
+    color: var(--ink);
+    font-family: var(--pixel);
+    -webkit-font-smoothing: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  button { font: inherit; color: inherit; }
+
+  .lcd {
+    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: radial-gradient(120% 90% at 30% 10%, var(--lcd-1), var(--lcd-2));
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    transition: filter .4s;
+  }
+  /* rejilla de píxeles del LCD */
+  .lcd::after {
+    content: "";
+    position: absolute; inset: 0;
+    pointer-events: none;
+    background:
+      repeating-linear-gradient(0deg, rgba(43,19,6,.05) 0 1px, transparent 1px 3px),
+      repeating-linear-gradient(90deg, rgba(43,19,6,.04) 0 1px, transparent 1px 3px);
+  }
+  .lcd.dim { filter: brightness(.55) saturate(.5); }
+
+  /* columna central: en tablet y desktop el contenido no se estira de borde a borde */
+  .frame {
+    flex: 1;
+    width: 100%;
+    max-width: 860px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  /* --- barra de estado --- */
+  .status {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 10px 14px 6px;
+    font-size: var(--fs-status);
+    line-height: 1;
+  }
+  .signal {
+    all: unset;
+    display: flex; align-items: flex-end; gap: .12em;
+    padding: .15em; margin: -.15em;
+    cursor: pointer;
+  }
+  .signal:focus-visible { outline: 3px dashed var(--ink); outline-offset: 2px; }
+  .signal svg { width: .5em; height: .9em; margin-right: .15em; }
+  .signal i { display: block; width: .2em; background: var(--ink); }
+  .signal i.off { background: transparent; box-shadow: inset 0 0 0 1px var(--ink-soft); }
+  .signal .x { margin-left: .2em; font-style: normal; }
+  .env {
+    all: unset;
+    display: flex; align-items: center; gap: .2em;
+    padding: .15em; margin: -.15em;
+    cursor: pointer;
+  }
+  .env svg { width: 1em; height: .72em; }
+  .env:focus-visible { outline: 3px dashed var(--ink); outline-offset: 2px; }
+  .batt {
+    all: unset;
+    display: flex; align-items: center;
+    padding: .15em; margin: -.15em;
+    cursor: pointer;
+  }
+  .batt:focus-visible { outline: 3px dashed var(--ink); outline-offset: 2px; }
+  .batt.empty .cell { animation: blink 1s steps(1) infinite; }
+  .batt .cell {
+    position: relative;
+    display: block;
+    width: 1.7em; height: .8em;
+    border: 2px solid var(--ink);
+    padding: 2px;
+  }
+  .batt .cell::after {
+    content: ""; position: absolute; right: -.3em; top: .15em;
+    width: .2em; height: .3em; background: var(--ink);
+  }
+  .batt .cell i {
+    display: block; height: 100%;
+    background: repeating-linear-gradient(90deg, var(--ink) 0 .3em, transparent .3em .4em);
+    transition: width .3s steps(4);
+  }
+
+  .screen { position: relative; flex: 1; overflow: hidden; }
+  .view { position: absolute; inset: 0; display: none; flex-direction: column; }
+  .view.on { display: flex; }
+
+  /* --- arranque --- */
+  .boot { align-items: center; justify-content: center; text-align: center; gap: 6px; padding: 0 16px; }
+  .boot .who { font-size: var(--fs-title); line-height: 1; margin: 0; }
+  .boot .role { font-size: var(--fs-body); margin: 0; }
+  .boot .logo {
+    display: block;
+    width: min(82vw, 460px); height: auto;
+    margin-bottom: .5em;
+    shape-rendering: crispEdges;
+  }
+  .boot .logo rect { fill: var(--ink); opacity: .14; }
+  .boot .logo rect.lit { opacity: 1; }
+  .boot .pct { font-size: var(--fs-status); margin: .6em 0 0; color: var(--ink-soft); }
+
+  /* --- inicio --- */
+  .home { align-items: center; text-align: center; padding: 12px 20px 8px; }
+  .operator { margin: 8px 0 0; font-size: var(--fs-title); }
+  .clock { margin: 4px 0 0; font-size: var(--fs-clock); line-height: .85; letter-spacing: 2px; }
+  .date { margin: 0; font-size: var(--fs-body); text-transform: capitalize; }
+  .phrase {
+    margin: auto 0 0;
+    max-width: 26ch;
+    font-size: var(--fs-body);
+    line-height: 1.05;
+    padding: .4em .5em;
+    border-top: var(--px) dotted var(--ink);
+  }
+  .caret { animation: blink 1s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  /* --- menú (barra de navegación + lista) --- */
+  .titlebar {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin: 0;
+    padding: 2px 14px;
+    font-weight: normal;
+    font-size: var(--fs-title);
+    background: var(--ink);
+    color: var(--lcd-1);
+  }
+  .titlebar small { font-size: .75em; }
+  .listwrap { flex: 1; display: flex; min-height: 0; padding: 8px 10px 6px 12px; }
+  .list {
+    flex: 1;
+    list-style: none; margin: 0; padding: 0;
+    overflow-y: auto;
+    scrollbar-width: none;
+  }
+  .list::-webkit-scrollbar { display: none; }
+  .list button {
+    all: unset;
+    display: flex; align-items: baseline; gap: .55em;
+    width: 100%;
+    padding: .15em .4em;
+    font-size: var(--fs-item);
+    line-height: 1;
+    cursor: pointer;
+    box-sizing: border-box;
+  }
+  .list .n { font-size: .65em; opacity: .7; min-width: 1ch; }
+  .list li.sel button { background: var(--ink); color: var(--lcd-1); }
+  .list li.sel .n { opacity: 1; }
+  .scroll {
+    position: relative;
+    width: 10px; margin-left: 10px;
+    background: repeating-linear-gradient(to bottom, var(--ink) 0 2px, transparent 2px 5px) center / 2px 100% no-repeat;
+  }
+  .scroll i { position: absolute; left: 0; right: 0; height: 18%; background: var(--ink); transition: top .1s steps(2); }
+
+  /* --- página de un módulo (texto con scroll) --- */
+  .pagebody {
+    flex: 1;
+    overflow-y: auto;
+    scrollbar-width: none;
+    font-size: var(--fs-body);
+    line-height: 1.05;
+  }
+  .pagebody::-webkit-scrollbar { display: none; }
+  .pagebody p { margin: 0 0 .35em; }
+  .pagebody h2 {
+    margin: .5em 0 .15em;
+    font-size: 1.15em;
+    font-weight: normal;
+    border-bottom: var(--px) dotted var(--ink);
+  }
+  .pagebody h2:first-child { margin-top: 0; }
+  .pagebody .meta { color: var(--ink-soft); }
+  .pagebody a { color: inherit; text-decoration-thickness: 2px; text-underline-offset: .15em; }
+  .tags { display: flex; flex-wrap: wrap; gap: .3em; list-style: none; margin: .2em 0 0; padding: 0; }
+  .tags li { padding: 0 .3em; border: 2px solid var(--ink); }
+  .scroll.none { visibility: hidden; }
+
+  /* --- ventana emergente --- */
+  .popup {
+    position: absolute; left: 7%; right: 7%; top: 12%;
+    max-width: 560px; margin: 0 auto;
+    background: var(--lcd-1);
+    border: var(--px) solid var(--ink);
+    box-shadow: 6px 6px 0 var(--ink);
+    z-index: 2;
+  }
+  .popup[hidden] { display: none; }
+  .popup .ptitle { margin: 0; padding: 2px 12px; background: var(--ink); color: var(--lcd-1); font-size: var(--fs-title); }
+  .popup .pbody { margin: 0; padding: .4em .6em .6em; font-size: var(--fs-body); line-height: 1.05; }
+  .popup .pbody p { margin: 0 0 .25em; }
+  .popup .art {
+    display: block;
+    width: 100%; height: auto; max-height: 36vh;
+    margin: .1em 0 .3em;
+    shape-rendering: crispEdges;
+  }
+  .popup .place { font-size: 1.3em; line-height: 1; }
+  .popup .mail { color: inherit; overflow-wrap: anywhere; text-decoration-thickness: 2px; text-underline-offset: .15em; }
+
+  /* --- toast: aviso breve sobre las teclas de función --- */
+  .toast {
+    position: absolute; left: 50%; bottom: .5em;
+    transform: translateX(-50%);
+    z-index: 3;
+    max-width: 90%;
+    padding: .1em .6em;
+    font-size: var(--fs-body);
+    line-height: 1.1;
+    white-space: nowrap;
+    background: var(--ink);
+    color: var(--lcd-1);
+    box-shadow: 0 0 0 var(--px) var(--lcd-1), 0 0 0 calc(var(--px) * 2) var(--ink);
+    animation: toast-in .24s steps(3);
+  }
+  .toast[hidden] { display: none; }
+  @keyframes toast-in { from { transform: translate(-50%, 120%); } }
+
+  /* --- teclas de función en el pie --- */
+  .softkeys { display: flex; justify-content: space-between; gap: 14px; padding: 8px 10px 12px; }
+  .softkeys button {
+    all: unset;
+    min-width: 38%;
+    padding: .15em .4em;
+    text-align: center;
+    font-size: var(--fs-soft);
+    line-height: 1;
+    background: var(--ink);
+    color: var(--lcd-1);
+    cursor: pointer;
+    box-sizing: border-box;
+  }
+  .softkeys button.empty { visibility: hidden; }
+
+  :focus-visible { outline: 3px dashed var(--ink); outline-offset: 3px; }
+
+  /* tablet / desktop: más aire alrededor */
+  @media (min-width: 600px) {
+    .status { padding: 18px 28px 10px; }
+    .listwrap { padding: 16px 24px 10px 28px; }
+    .titlebar { padding: 4px 28px; }
+    .softkeys { padding: 12px 24px 24px; }
+    .softkeys button { min-width: 30%; }
+  }
+  /* desktop: pista de teclado discreta */
+  .hint { display: none; }
+  @media (min-width: 1024px) and (hover: hover) {
+    .hint {
+      display: block;
+      text-align: center;
+      margin: 0 0 10px;
+      font-size: var(--fs-status);
+      color: var(--ink-soft);
+    }
+  }
+  /* móvil en horizontal: compactar el inicio */
+  @media (max-height: 480px) and (orientation: landscape) {
+    .clock { font-size: 4.5rem; }
+    .operator { margin: 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .caret { animation: none; }
+    .lcd, .scroll i, .batt .cell i { transition: none; }
+    .batt.empty .cell { animation: none; }
+  }
+</style>
+</head>
+<body>
+<section class="lcd" id="lcd" aria-label="Portfolio">
+  <div class="frame">
+    <header class="status" aria-label="Status bar">
+      <button class="signal" id="signal" type="button">
+        <svg viewBox="0 0 7 13" aria-hidden="true"><path fill="currentColor" d="M0 0h7L4 4v9H3V4z"/></svg>
+        <i style="height:.25em"></i><i style="height:.42em"></i><i style="height:.6em"></i><i style="height:.78em"></i><i style="height:.95em"></i>
+      </button>
+      <button class="env" id="env" type="button" aria-label="See my email">
+        <svg viewBox="0 0 15 11" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" d="M1 1h13v9H1zM1 1l6.5 5L14 1"/></svg>
+      </button>
+      <button class="batt" id="batt" type="button"><span class="cell"><i id="battFill"></i></span></button>
+    </header>
+
+    <div class="screen">
+      <div class="view boot on" id="v-boot" aria-hidden="true">
+        <svg class="logo" id="logo" role="img" aria-label="Logo //stev"></svg>
+        <p class="who" id="bootName"></p>
+        <p class="role" id="bootRole"></p>
+        <p class="pct" id="bootPct">0%</p>
+      </div>
+
+      <div class="view home" id="v-home">
+        <p class="operator" id="operator"></p>
+        <p class="clock" id="clock">--:--</p>
+        <p class="date" id="date"></p>
+        <p class="phrase"><span id="phrase"></span><span class="caret">_</span></p>
+      </div>
+
+      <div class="view menu" id="v-menu">
+        <h1 class="titlebar"><span>Menu</span><small id="pos"></small></h1>
+        <div class="listwrap">
+          <ol class="list" id="list"></ol>
+          <div class="scroll" aria-hidden="true"><i id="thumb"></i></div>
+        </div>
+      </div>
+
+      <div class="view page" id="v-page">
+        <h1 class="titlebar"><span id="pgTitle"></span></h1>
+        <div class="listwrap">
+          <div class="pagebody" id="pgBody"></div>
+          <div class="scroll" id="pgScroll" aria-hidden="true"><i id="pgThumb"></i></div>
+        </div>
+      </div>
+
+      <p class="toast" id="toast" role="status" aria-live="polite" hidden></p>
+      <div class="popup" id="popup" role="dialog" aria-live="polite" hidden>
+        <p class="ptitle" id="ptitle"></p>
+        <div class="pbody" id="pbody"></div>
+      </div>
+    </div>
+
+    <p class="hint">↑ ↓ move · Enter select · Esc back · 1–6 shortcuts</p>
+    <footer class="softkeys">
+      <button id="skL" type="button"></button>
+      <button id="skR" type="button"></button>
+    </footer>
+  </div>
+</section>
+
+<script>
+/* ================= CONFIGURA TU PORTFOLIO AQUÍ ================= */
+const CONFIG = {
+  nombre: 'Harol',
+  logo: '//stev',
+  rol: 'System engineer',
+  frase: "Hi, I'm Harol. I like building tools for myself and then releasing them to the public.",
+  buscandoEmpleo: true,   // Señal: barras llenas = abierto a ofertas
+  estado: 'side',         // Batería: 'vacaciones' | 'ocupado' | 'parcial' | 'side' | 'oferta'
+  correo: 'contact@hstev.site', // Sobre: se muestra al tocarlo, con opción de copiar
+  ubicacion: 'Medellín, Colombia', // se muestra al tocar la señal
+  // Cada opción abre su página; 'contacto' abre el popup del correo y sin página sale "en construcción"
+  menu: [
+    { titulo: 'About me',   pagina: 'perfil' },
+    { titulo: 'Education',  pagina: 'educacion' },
+    { titulo: 'Experience', pagina: 'experiencia' },
+    { titulo: 'Projects',   pagina: 'proyectos' },
+    { titulo: 'Skills',     pagina: 'habilidades' },
+    { titulo: 'Contact',    pagina: 'contacto' }
+  ],
+  perfil: [
+    "I'm Harol. I like building tools for myself and then releasing them to the public.",
+    'Where I want to go is solarpunk tech: secure, open-source IoT, AI that runs on modest hardware, and old electronics rescued and given a second life. Technology that is repairable, efficient and owned by the people who use it.'
+  ],
+  educacion: [
+    { titulo: 'Systems Engineer', lugar: 'ITM · Instituto Tecnológico Metropolitano' }
+  ],
+  certificaciones: [
+    { nombre: 'AWS Solutions Architect – Associate', estado: 'In progress' },
+    { nombre: 'CKE · Certified Kubernetes Expert',    estado: 'In progress' }
+  ],
+  // fechas 'AAAA-MM'; sin 'hasta' = trabajo actual (la duración se calcula sola)
+  experiencia: [
+    { empresa: 'LEGOPSTECH',       cargo: 'Software Developer',   desde: '2024-06' },
+    { empresa: 'Experis Colombia', cargo: 'Programming Analyst',  desde: '2022-07', hasta: '2023-02' },
+    { empresa: 'Soluciones Star',  cargo: 'Full Stack Developer', desde: '2015-06', hasta: '2022-04',
+      detalle: 'SDLC: development, maintenance and support of software applications.' }
+  ],
+  proyectos: [
+    { nombre: 'simple-sample',    url: 'https://hstev.github.io/simple-sample',          detalle: 'A tool for enthusiast beatmakers to sample audio files.' },
+    { nombre: 'browser-check',    url: 'https://hstev.github.io/browser-check',          detalle: 'A tool to check the browser compatibility of a website and share the results with others.' },
+    { nombre: 'totp',             url: 'https://github.com/hstev/totp',                  detalle: 'A tool to generate TOTP codes for 2FA.' },
+    { nombre: 'Solar Punk',       url: 'https://github.com/hstev/todo',                  detalle: 'A todo list app that I use to keep track of my tasks.' },
+    { nombre: 'quehaypaaprender', url: 'https://github.com/hstev/quehaypaaprender',      detalle: 'An education platform for everyone to learn about different topics.' },
+    { nombre: 'reconoz',          url: 'https://reconoz.co',                             detalle: 'A KYC SaaS.' }
+  ],
+  habilidades: ['Docker', 'Kubernetes', 'ArgoCD', 'GitOps', 'DevOps', 'SecOps', 'CI/CD']
+};
+/* =============================================================== */
+
+const $ = id => document.getElementById(id);
+const lcd = $('lcd');
+const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const state = { view: 'boot', idx: 0, popup: null };
+/* Estados de la batería: cuanta más carga, más disponible estoy */
+const ESTADOS = {
+  vacaciones: { nivel: 0, nombre: 'On vacation',                 detalle: "Offline for a few days. I'll reply when I'm back." },
+  ocupado:    { nivel: 1, nombre: 'Busy',                        detalle: 'Fully booked for now. Feel free to write anyway.' },
+  parcial:    { nivel: 2, nombre: 'Partially available',         detalle: 'I have a few free hours a week.' },
+  side:       { nivel: 3, nombre: 'Available for side projects',  detalle: 'Time for side projects or freelance work.' },
+  oferta:     { nivel: 4, nombre: 'Open to a job offer',         detalle: 'Ready for my next full-time role.' }
+};
+const estado = ESTADOS[CONFIG.estado] || ESTADOS.side;
+
+/* --- indicadores --- */
+function setupStatus() {
+  const bars = [...$('signal').querySelectorAll('i')];
+  const lit = CONFIG.buscandoEmpleo ? bars.length : 1;
+  bars.forEach((b, i) => b.classList.toggle('off', i >= lit));
+  if (!CONFIG.buscandoEmpleo) {
+    const x = document.createElement('em'); x.className = 'x'; x.textContent = '×';
+    $('signal').appendChild(x);
+  }
+  $('signal').setAttribute('aria-label', (CONFIG.buscandoEmpleo ? 'Signal: open to job offers' : 'Signal: not looking for a job right now') + '. See location');
+  $('operator').textContent = CONFIG.buscandoEmpleo ? 'Open to offers' : 'Not looking';
+
+  $('battFill').style.width = (estado.nivel / 4) * 100 + '%';
+  $('batt').classList.toggle('empty', estado.nivel === 0);
+  $('batt').setAttribute('aria-label', `Battery: ${estado.nombre}. See details`);
+
+
+  $('bootName').textContent = CONFIG.nombre;
+  $('bootRole').textContent = CONFIG.rol;
+  document.title = CONFIG.nombre + ' · Portfolio';
+}
+
+/* --- reloj --- */
+function tick() {
+  const d = new Date();
+  $('clock').textContent = d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+  $('date').textContent = d.toLocaleDateString('en-US', { weekday: 'short', day: '2-digit', month: '2-digit', year: 'numeric' });
+}
+
+/* --- menú --- */
+function buildMenu() {
+  $('list').innerHTML = CONFIG.menu.map((t, i) =>
+    `<li><button type="button" data-i="${i}"><span class="n">${i + 1}</span>${t.titulo}</button></li>`).join('');
+  $('list').addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b || wake()) return;
+    state.idx = +b.dataset.i; choose();
+  });
+}
+function choose() {
+  const item = CONFIG.menu[state.idx];
+  if (item.pagina === 'contacto') return mailPopup();
+  const page = PAGES[item.pagina];
+  if (!page) {
+    state.popup = { title: item.titulo, body: '<p>This module is under construction.</p><p>Come back soon.</p>' };
+    return render();
+  }
+  $('pgTitle').textContent = item.titulo;
+  $('pgBody').innerHTML = page();
+  $('pgBody').scrollTop = 0;
+  state.view = 'page';
+  render();
+  updatePageThumb();
+}
+
+/* --- páginas de los módulos --- */
+const mes = ym => { const [y, m] = ym.split('-').map(Number); return new Date(y, m - 1).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }); };
+function duracion(desde, hasta) {
+  const d = new Date();
+  const [y1, m1] = desde.split('-').map(Number);
+  const [y2, m2] = hasta ? hasta.split('-').map(Number) : [d.getFullYear(), d.getMonth() + 1];
+  const total = (y2 - y1) * 12 + (m2 - m1) + 1; // como LinkedIn: cuenta el mes inicial y el final
+  const y = Math.floor(total / 12), m = total % 12;
+  return [y && `${y} yr${y > 1 ? 's' : ''}`, m && `${m} mo${m > 1 ? 's' : ''}`].filter(Boolean).join(' ');
+}
+const PAGES = {
+  perfil: () => CONFIG.perfil.map(p => `<p>${p}</p>`).join(''),
+  educacion: () =>
+    '<h2>Education</h2>' + CONFIG.educacion.map(e => `<p>${e.titulo}</p><p class="meta">${e.lugar}</p>`).join('') +
+    '<h2>Certifications</h2>' + CONFIG.certificaciones.map(c => `<p>${c.nombre}</p><p class="meta">${c.estado}</p>`).join(''),
+  experiencia: () => CONFIG.experiencia.map(j =>
+    `<h2>${j.empresa}</h2><p>${j.cargo}</p>
+     <p class="meta">${mes(j.desde)} – ${j.hasta ? mes(j.hasta) : 'Present'} · ${duracion(j.desde, j.hasta)}</p>
+     ${j.detalle ? `<p>${j.detalle}</p>` : ''}`).join(''),
+  proyectos: () => CONFIG.proyectos.map(p =>
+    `<h2><a href="${p.url}" target="_blank" rel="noopener">${p.nombre} ↗</a></h2><p>${p.detalle}</p>`).join(''),
+  habilidades: () => `<ul class="tags">${CONFIG.habilidades.map(t => `<li>${t}</li>`).join('')}</ul>`
+};
+function updatePageThumb() {
+  const b = $('pgBody'), max = b.scrollHeight - b.clientHeight;
+  $('pgScroll').classList.toggle('none', max <= 0);
+  $('pgThumb').style.top = `calc(${max > 0 ? b.scrollTop / max : 0} * 82%)`;
+}
+$('pgBody').addEventListener('scroll', updatePageThumb, { passive: true });
+/* --- pixel art de Medellín: Metrocable sobre las laderas y el edificio Coltejer --- */
+function medellinArt() {
+  const W = 64, H = 36;
+  const g = Array.from({ length: H }, () => new Uint8Array(W));
+  const set = (x, y, v = 1) => { if (x >= 0 && x < W && y >= 0 && y < H) g[y][x] = v; };
+  const rect = (x, y, w, h, v = 1) => { for (let j = y; j < y + h; j++) for (let i = x; i < x + w; i++) set(i, j, v); };
+  const line = (x0, y0, x1, y1) => {
+    const dx = Math.abs(x1 - x0), dy = -Math.abs(y1 - y0), sx = x0 < x1 ? 1 : -1, sy = y0 < y1 ? 1 : -1;
+    let e = dx + dy;
+    for (;;) { set(x0, y0); if (x0 === x1 && y0 === y1) break; const e2 = 2 * e; if (e2 >= dy) { e += dy; x0 += sx; } if (e2 <= dx) { e += dx; y0 += sy; } }
+  };
+
+  // cordillera al fondo (punteada)
+  for (let x = 0; x < W; x += 2) set(x, Math.round(9 + 3 * Math.sin(x / 7) + 2 * Math.sin(x / 3.1)));
+
+  // ladera con las casas de las comunas (ventanas encendidas)
+  const tops = [];
+  for (let x = 0; x < 44; x++) {
+    tops[x] = Math.round(13 + x * 0.36 + Math.sin(x / 2) * 0.6);
+    for (let y = tops[x]; y < H; y++) set(x, y);
+  }
+  for (let y = 0; y < 33; y++) for (let x = 0; x < 44; x++)
+    if (y > tops[x] + 1 && y % 3 === 1 && (x + (Math.floor(y / 3) % 2) * 2) % 4 === 0) set(x, y, 0);
+
+  // ciudad en el valle
+  rect(0, 33, W, 3);
+  [[44, 24, 4, 9], [48, 19, 3, 14], [58, 22, 4, 11], [62, 26, 2, 7]].forEach(([x, y, w, h]) => {
+    rect(x, y, w, h);
+    for (let j = y + 2; j < y + h - 1; j += 2) for (let i = x + 1; i < x + w - 1; i += 2) set(i, j, 0);
+  });
+
+  // edificio Coltejer: torre con la punta en forma de aguja
+  rect(51, 8, 6, 25);
+  for (let k = 0; k < 6; k++) rect(51 + k, 7 - k, 6 - k, 1);
+  set(54, 6, 0); set(54, 7, 0); set(55, 5, 0);
+  for (let y = 10; y < 32; y += 2) { set(52, y, 0); set(54, y, 0); }
+
+  // Metrocable: cable, torre y góndola
+  line(0, 4, 46, 18);
+  line(14, 9, 12, 18); line(14, 9, 16, 18); line(13, 13, 15, 13); line(12, 16, 16, 16);
+  line(28, 13, 28, 14);
+  rect(26, 14, 5, 1);
+  rect(25, 15, 7, 5);
+  rect(26, 16, 2, 2, 0); rect(29, 16, 2, 2, 0);
+
+  let d = '';
+  for (let y = 0; y < H; y++) {
+    let x = 0;
+    while (x < W) {
+      if (g[y][x]) { const s = x; while (x < W && g[y][x]) x++; d += `M${s} ${y}h${x - s}v1h${s - x}z`; }
+      else x++;
+    }
+  }
+  return `<svg class="art" viewBox="0 0 ${W} ${H}" role="img" aria-label="Pixel art of Medellín: the Metrocable over the hillsides and the Coltejer building"><path fill="var(--ink)" d="${d}"/></svg>`;
+}
+function locationPopup() {
+  state.popup = {
+    title: 'Location',
+    body: `${medellinArt()}
+           <p class="place">${CONFIG.ubicacion}</p>
+           <p>${CONFIG.buscandoEmpleo ? 'Open to offers.' : 'Not looking.'}</p>`
+  };
+  render();
+}
+function batteryPopup() {
+  const barras = '▮'.repeat(estado.nivel) + '▯'.repeat(4 - estado.nivel);
+  state.popup = {
+    title: 'Availability',
+    body: `<p class="place">[${barras}]</p>
+           <p class="place">${estado.nombre}</p>
+           <p>${estado.detalle}</p>`
+  };
+  render();
+}
+function mailPopup() {
+  state.popup = {
+    title: 'Email',
+    body: `<p>Write to me at:</p>
+           <p class="place"><a class="mail" href="mailto:${CONFIG.correo}">${CONFIG.correo}</a></p>`,
+    L: 'Copy',
+    onL: copyMail
+  };
+  render();
+}
+async function copyMail() {
+  let ok = false;
+  try { await navigator.clipboard.writeText(CONFIG.correo); ok = true; }
+  catch {
+    const t = document.createElement('textarea');
+    t.value = CONFIG.correo; t.setAttribute('readonly', ''); t.style.position = 'fixed'; t.style.opacity = '0';
+    document.body.appendChild(t); t.select();
+    try { ok = document.execCommand('copy'); } catch { ok = false; }
+    t.remove();
+  }
+  toast(ok ? '✓ Email copied' : '× Could not copy');
+}
+let toastTimer;
+function toast(msg) {
+  const t = $('toast');
+  t.hidden = true; void t.offsetWidth; // reinicia la animación
+  t.textContent = msg; t.hidden = false;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { t.hidden = true; }, 1800);
+}
+function infoPopup() {
+  state.popup = {
+    title: 'Indicators',
+    body: `<p>Signal: ${CONFIG.buscandoEmpleo ? 'open to offers' : 'not looking for a job'}. Tap it to see my location.</p>
+           <p>Battery: ${estado.nombre.toLowerCase()}. Tap it to see details.</p>
+           <p>Envelope: tap it to see and copy my email.</p>`
+  };
+  render();
+}
+
+/* --- render --- */
+function render() {
+  ['boot', 'home', 'menu', 'page'].forEach(v => $('v-' + v).classList.toggle('on', state.view === v));
+
+  const items = [...$('list').children];
+  items.forEach((li, i) => li.classList.toggle('sel', i === state.idx));
+  const n = CONFIG.menu.length;
+  $('pos').textContent = `${state.idx + 1}/${n}`;
+  $('thumb').style.top = `calc(${n > 1 ? state.idx / (n - 1) : 0} * 82%)`;
+  if (state.view === 'menu' && items[state.idx]) items[state.idx].scrollIntoView({ block: 'nearest' });
+
+  $('popup').hidden = !state.popup;
+  if (state.popup) { $('ptitle').textContent = state.popup.title; $('pbody').innerHTML = state.popup.body; }
+
+  let L = '', R = '';
+  if (state.popup) { L = state.popup.L || ''; R = 'OK'; }
+  else if (state.view === 'home') { L = 'Info'; R = 'Menu'; }
+  else if (state.view === 'menu') { L = 'Back'; R = 'Select'; }
+  else if (state.view === 'page') { L = 'Back'; }
+  setSoft($('skL'), L); setSoft($('skR'), R);
+}
+function setSoft(btn, label) {
+  btn.textContent = label;
+  btn.classList.toggle('empty', !label);
+  btn.tabIndex = label ? 0 : -1;
+  btn.setAttribute('aria-hidden', String(!label));
+}
+
+/* --- acciones --- */
+function press(k) {
+  if (state.view === 'boot' || wake()) return;
+  if (state.popup) {
+    if (k === 'L' && state.popup.onL) { state.popup.onL(); return; }
+    if (['R', 'L', 'ok', 'back'].includes(k)) { state.popup = null; render(); }
+    return;
+  }
+  const n = CONFIG.menu.length;
+  const jump = /^[1-9]$/.test(k) && +k <= n;
+
+  if (state.view === 'home') {
+    if (['R', 'ok', 'up', 'down'].includes(k)) { state.view = 'menu'; render(); }
+    else if (k === 'L') infoPopup();
+    else if (jump) { state.view = 'menu'; state.idx = +k - 1; render(); }
+  } else if (state.view === 'menu') {
+    if (k === 'up') { state.idx = (state.idx - 1 + n) % n; render(); }
+    else if (k === 'down') { state.idx = (state.idx + 1) % n; render(); }
+    else if (k === 'R' || k === 'ok') choose();
+    else if (k === 'L' || k === 'back') { state.view = 'home'; render(); }
+    else if (jump) { state.idx = +k - 1; render(); }
+  } else if (state.view === 'page') {
+    const b = $('pgBody');
+    if (k === 'up' || k === 'down') b.scrollBy({ top: (k === 'up' ? -1 : 1) * b.clientHeight * .5, behavior: reduced ? 'auto' : 'smooth' });
+    else if (['L', 'R', 'ok', 'back'].includes(k)) { state.view = 'menu'; render(); }
+  }
+}
+
+/* --- gesto: deslizar en el menú para moverse --- */
+let touchY = null;
+$('v-menu').addEventListener('touchstart', e => { touchY = e.touches[0].clientY; }, { passive: true });
+$('v-menu').addEventListener('touchend', e => {
+  if (touchY === null) return;
+  const dy = e.changedTouches[0].clientY - touchY; touchY = null;
+  if (Math.abs(dy) > 40) press(dy < 0 ? 'down' : 'up');
+});
+
+/* --- retroiluminación: se apaga tras 25 s sin uso --- */
+let idleTimer;
+function resetIdle() { clearTimeout(idleTimer); idleTimer = setTimeout(() => lcd.classList.add('dim'), 25000); }
+function wake() {
+  resetIdle();
+  if (lcd.classList.contains('dim')) { lcd.classList.remove('dim'); return true; }
+  return false;
+}
+
+/* --- eventos --- */
+$('signal').addEventListener('click', () => {
+  if (state.view === 'boot' || wake()) return;
+  locationPopup();
+});
+$('env').addEventListener('click', () => {
+  if (state.view === 'boot' || wake()) return;
+  mailPopup();
+});
+$('batt').addEventListener('click', () => {
+  if (state.view === 'boot' || wake()) return;
+  batteryPopup();
+});
+$('skL').addEventListener('click', () => press('L'));
+$('skR').addEventListener('click', () => press('R'));
+const keyMap = { ArrowUp: 'up', ArrowDown: 'down', Enter: 'ok', Escape: 'back', Backspace: 'back' };
+document.addEventListener('keydown', e => {
+  const k = keyMap[e.key] || (/^[0-9]$/.test(e.key) ? e.key : null);
+  if (!k) return;
+  if (e.key === 'Enter' && document.activeElement?.matches('button')) return; // el clic ya lo gestiona
+  e.preventDefault();
+  press(k);
+});
+
+/* --- arranque --- */
+function typePhrase(text, el) {
+  if (reduced) { el.textContent = text; return; }
+  let i = 0;
+  const step = () => { el.textContent = text.slice(0, ++i); if (i < text.length) setTimeout(step, 38); };
+  step();
+}
+/* --- logo en pixel art (fuente 5×7 propia) --- */
+const GLYPHS = {
+  '/': ['....#', '...#.', '...#.', '..#..', '.#...', '.#...', '#....'],
+  'A': ['.###.', '#...#', '#...#', '#####', '#...#', '#...#', '#...#'],
+  'R': ['####.', '#...#', '#...#', '####.', '#.#..', '#..#.', '#...#'],
+  'O': ['.###.', '#...#', '#...#', '#...#', '#...#', '#...#', '.###.'],
+  'S': ['.####', '#....', '#....', '.###.', '....#', '....#', '####.'],
+  'T': ['#####', '..#..', '..#..', '..#..', '..#..', '..#..', '..#..'],
+  'E': ['#####', '#....', '#....', '####.', '#....', '#....', '#####'],
+  'V': ['#...#', '#...#', '#...#', '#...#', '#...#', '.#.#.', '..#..']
+};
+function buildLogo(text) {
+  const chars = [...text.toUpperCase()].filter(c => GLYPHS[c]);
+  const W = chars.length * 6 - 1, H = 7;
+  let rects = '';
+  chars.forEach((c, n) => GLYPHS[c].forEach((row, y) => [...row].forEach((px, x) => {
+    if (px === '#') rects += `<rect x="${n * 6 + x}" y="${y}" width="1" height="1" data-x="${n * 6 + x}"/>`;
+  })));
+  const svg = $('logo');
+  svg.setAttribute('viewBox', `-1 -1 ${W + 2} ${H + 2}`);
+  svg.setAttribute('aria-label', 'Logo ' + text);
+  svg.innerHTML = rects;
+  return { W, pixels: [...svg.querySelectorAll('rect')] };
+}
+
+/* --- arranque: el logo se va encendiendo de izquierda a derecha como barra de carga --- */
+function boot() {
+  const { W, pixels } = buildLogo(CONFIG.logo);
+  const total = reduced ? 300 : 2000;
+  const steps = W + 1;
+  for (let c = 0; c < steps; c++) {
+    setTimeout(() => {
+      pixels.forEach(p => { if (+p.dataset.x <= c) p.classList.add('lit'); });
+      $('bootPct').textContent = Math.round(((c + 1) / steps) * 100) + '%';
+    }, (total / steps) * c);
+  }
+  setTimeout(() => { state.view = 'home'; render(); typePhrase(CONFIG.frase, $('phrase')); resetIdle(); }, total + 450);
+}
+
+setupStatus(); buildMenu(); tick(); setInterval(tick, 10000);
+render(); boot();
+</script>
+</body>
+</html>
