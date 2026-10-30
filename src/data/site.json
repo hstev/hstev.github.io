@@ -1,0 +1,18 @@
+{
+  "name": "Harol",
+  "logo": "//stev",
+  "role": "System engineer",
+  "greeting": "Hi, I'm Harol. I like building tools for myself and then releasing them to the public.",
+  "openToWork": true,
+  "availability": "side",
+  "email": "contact@hstev.site",
+  "location": "Medellín, Colombia",
+  "menu": [
+    { "title": "About me",   "page": "about" },
+    { "title": "Education",  "page": "education" },
+    { "title": "Experience", "page": "experience" },
+    { "title": "Projects",   "page": "projects" },
+    { "title": "Skills",     "page": "skills" },
+    { "title": "Contact",    "page": "contact" }
+  ]
+}

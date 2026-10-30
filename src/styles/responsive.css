@@ -1,0 +1,30 @@
+/* tablet / desktop: más aire alrededor */
+@media (min-width: 600px) {
+  .status { padding: 18px 28px 10px; }
+  .listwrap { padding: 16px 24px 10px 28px; }
+  .titlebar { padding: 4px 28px; }
+  .softkeys { padding: 12px 24px 24px; }
+  .softkeys button { min-width: 30%; }
+}
+/* desktop: pista de teclado discreta */
+.hint { display: none; }
+@media (min-width: 1024px) and (hover: hover) {
+  .hint {
+    display: block;
+    text-align: center;
+    margin: 0 0 10px;
+    font-size: var(--fs-status);
+    color: var(--ink-soft);
+  }
+}
+/* móvil en horizontal: compactar el inicio */
+@media (max-height: 480px) and (orientation: landscape) {
+  .clock { font-size: 4.5rem; }
+  .operator { margin: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .caret { animation: none; }
+  .lcd, .scroll i, .batt .cell i { transition: none; }
+  .batt.empty .cell { animation: none; }
+}

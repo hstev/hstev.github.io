@@ -1,0 +1,6 @@
+[
+  { "company": "LEGOPSTECH",       "role": "Software Developer",   "from": "2024-06" },
+  { "company": "Experis Colombia", "role": "Programming Analyst",  "from": "2022-07", "to": "2023-02" },
+  { "company": "Soluciones Star",  "role": "Full Stack Developer", "from": "2015-06", "to": "2022-04",
+    "detail": "SDLC: development, maintenance and support of software applications." }
+]

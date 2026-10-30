@@ -1,0 +1,16 @@
+/* --- teclas de función en el pie --- */
+.softkeys { display: flex; justify-content: space-between; gap: 14px; padding: 8px 10px 12px; }
+.softkeys button {
+  all: unset;
+  min-width: 38%;
+  padding: .15em .4em;
+  text-align: center;
+  font-size: var(--fs-soft);
+  line-height: 1;
+  background: var(--ink);
+  color: var(--lcd-1);
+  cursor: pointer;
+  box-sizing: border-box;
+}
+.softkeys button.empty { visibility: hidden; }
+

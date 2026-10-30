@@ -1,0 +1,37 @@
+[
+  {
+    "name": "reconoz",
+    "url": "https://reconoz.co",
+    "description": "A KYC SaaS."
+  },
+  {
+    "name": "simple-sample",
+    "url": "https://hstev.github.io/simple-sample",
+    "description": "A tool for enthusiast beatmakers to sample audio files."
+  },
+  {
+    "name": "vox-lab",
+    "url": "https://hstev.github.io/vox-lab",
+    "description": "A web audio api filter to use in your chats."
+  },
+  {
+    "name": "browser-check",
+    "url": "https://hstev.github.io/browser-check",
+    "description": "A tool to check the browser compatibility of a website and share the results with others."
+  },
+  {
+    "name": "totp",
+    "url": "https://hstev.github.io/totp",
+    "description": "A tool to generate TOTP codes for 2FA."
+  },
+  {
+    "name": "todo",
+    "url": "https://hstev.github.io/hstev/todo",
+    "description": "A todo list app that I use to keep track of my tasks."
+  },
+  {
+    "name": "quehaypaaprender",
+    "url": "https://quehaypaaprender.co",
+    "description": "An education platform for everyone to learn about different topics."
+  }
+]

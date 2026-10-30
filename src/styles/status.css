@@ -1,0 +1,53 @@
+/* --- barra de estado --- */
+.status {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 14px 6px;
+  font-size: var(--fs-status);
+  line-height: 1;
+}
+.signal {
+  all: unset;
+  display: flex; align-items: flex-end; gap: .12em;
+  padding: .15em; margin: -.15em;
+  cursor: pointer;
+}
+.signal:focus-visible { outline: 3px dashed var(--ink); outline-offset: 2px; }
+.signal svg { width: .5em; height: .9em; margin-right: .15em; }
+.signal i { display: block; width: .2em; background: var(--ink); }
+.signal i.off { background: transparent; box-shadow: inset 0 0 0 1px var(--ink-soft); }
+.signal .x { margin-left: .2em; font-style: normal; }
+.env {
+  all: unset;
+  display: flex; align-items: center; gap: .2em;
+  padding: .15em; margin: -.15em;
+  cursor: pointer;
+}
+.env svg { width: 1em; height: .72em; }
+.env:focus-visible { outline: 3px dashed var(--ink); outline-offset: 2px; }
+.batt {
+  all: unset;
+  display: flex; align-items: center;
+  padding: .15em; margin: -.15em;
+  cursor: pointer;
+}
+.batt:focus-visible { outline: 3px dashed var(--ink); outline-offset: 2px; }
+.batt.empty .cell { animation: blink 1s steps(1) infinite; }
+.batt .cell {
+  position: relative;
+  display: block;
+  width: 1.7em; height: .8em;
+  border: 2px solid var(--ink);
+  padding: 2px;
+}
+.batt .cell::after {
+  content: ""; position: absolute; right: -.3em; top: .15em;
+  width: .2em; height: .3em; background: var(--ink);
+}
+.batt .cell i {
+  display: block; height: 100%;
+  background: repeating-linear-gradient(90deg, var(--ink) 0 .3em, transparent .3em .4em);
+  transition: width .3s steps(4);
+}

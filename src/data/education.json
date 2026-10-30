@@ -1,0 +1,9 @@
+{
+  "degrees": [
+    { "title": "Systems Engineer", "institution": "ITM · Instituto Tecnológico Metropolitano" }
+  ],
+  "certifications": [
+    { "name": "AWS Solutions Architect – Associate", "status": "In progress" },
+    { "name": "CKE · Certified Kubernetes Expert",   "status": "In progress" }
+  ]
+}

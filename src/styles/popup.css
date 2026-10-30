@@ -1,0 +1,40 @@
+/* --- ventana emergente --- */
+.popup {
+  position: absolute; left: 7%; right: 7%; top: 12%;
+  max-width: 560px; margin: 0 auto;
+  background: var(--lcd-1);
+  border: var(--px) solid var(--ink);
+  box-shadow: 6px 6px 0 var(--ink);
+  z-index: 2;
+}
+.popup[hidden] { display: none; }
+.popup .ptitle { margin: 0; padding: 2px 12px; background: var(--ink); color: var(--lcd-1); font-size: var(--fs-title); }
+.popup .pbody { margin: 0; padding: .4em .6em .6em; font-size: var(--fs-body); line-height: 1.05; }
+.popup .pbody p { margin: 0 0 .25em; }
+.popup .art {
+  display: block;
+  width: 100%; height: auto; max-height: 36vh;
+  margin: .1em 0 .3em;
+  shape-rendering: crispEdges;
+}
+.popup .place { font-size: 1.3em; line-height: 1; }
+.popup .mail { color: inherit; overflow-wrap: anywhere; text-decoration-thickness: 2px; text-underline-offset: .15em; }
+
+/* --- toast: aviso breve sobre las teclas de función --- */
+.toast {
+  position: absolute; left: 50%; bottom: .5em;
+  transform: translateX(-50%);
+  z-index: 3;
+  max-width: 90%;
+  padding: .1em .6em;
+  font-size: var(--fs-body);
+  line-height: 1.1;
+  white-space: nowrap;
+  background: var(--ink);
+  color: var(--lcd-1);
+  box-shadow: 0 0 0 var(--px) var(--lcd-1), 0 0 0 calc(var(--px) * 2) var(--ink);
+  animation: toast-in .24s steps(3);
+}
+.toast[hidden] { display: none; }
+@keyframes toast-in { from { transform: translate(-50%, 120%); } }
+

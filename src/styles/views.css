@@ -1,0 +1,98 @@
+/* --- pantalla y vistas --- */
+.screen { position: relative; flex: 1; overflow: hidden; }
+.view { position: absolute; inset: 0; display: none; flex-direction: column; }
+.view.on { display: flex; }
+
+
+/* --- arranque --- */
+.boot { align-items: center; justify-content: center; text-align: center; gap: 6px; padding: 0 16px; }
+.boot .who { font-size: var(--fs-title); line-height: 1; margin: 0; }
+.boot .role { font-size: var(--fs-body); margin: 0; }
+.boot .logo {
+  display: block;
+  width: min(82vw, 460px); height: auto;
+  margin-bottom: .5em;
+  shape-rendering: crispEdges;
+}
+.boot .logo rect { fill: var(--ink); opacity: .14; }
+.boot .logo rect.lit { opacity: 1; }
+.boot .pct { font-size: var(--fs-status); margin: .6em 0 0; color: var(--ink-soft); }
+
+/* --- inicio --- */
+.home { align-items: center; text-align: center; padding: 12px 20px 8px; }
+.operator { margin: 8px 0 0; font-size: var(--fs-title); }
+.clock { margin: 4px 0 0; font-size: var(--fs-clock); line-height: .85; letter-spacing: 2px; }
+.date { margin: 0; font-size: var(--fs-body); text-transform: capitalize; }
+.phrase {
+  margin: auto 0 0;
+  max-width: 26ch;
+  font-size: var(--fs-body);
+  line-height: 1.05;
+  padding: .4em .5em;
+  border-top: var(--px) dotted var(--ink);
+}
+.caret { animation: blink 1s steps(1) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+
+/* --- menú (barra de navegación + lista) --- */
+.titlebar {
+  display: flex; justify-content: space-between; align-items: baseline;
+  margin: 0;
+  padding: 2px 14px;
+  font-weight: normal;
+  font-size: var(--fs-title);
+  background: var(--ink);
+  color: var(--lcd-1);
+}
+.titlebar small { font-size: .75em; }
+.listwrap { flex: 1; display: flex; min-height: 0; padding: 8px 10px 6px 12px; }
+.list {
+  flex: 1;
+  list-style: none; margin: 0; padding: 0;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+.list::-webkit-scrollbar { display: none; }
+.list button {
+  all: unset;
+  display: flex; align-items: baseline; gap: .55em;
+  width: 100%;
+  padding: .15em .4em;
+  font-size: var(--fs-item);
+  line-height: 1;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+.list .n { font-size: .65em; opacity: .7; min-width: 1ch; }
+.list li.sel button { background: var(--ink); color: var(--lcd-1); }
+.list li.sel .n { opacity: 1; }
+.scroll {
+  position: relative;
+  width: 10px; margin-left: 10px;
+  background: repeating-linear-gradient(to bottom, var(--ink) 0 2px, transparent 2px 5px) center / 2px 100% no-repeat;
+}
+.scroll i { position: absolute; left: 0; right: 0; height: 18%; background: var(--ink); transition: top .1s steps(2); }
+
+/* --- página de un módulo (texto con scroll) --- */
+.pagebody {
+  flex: 1;
+  overflow-y: auto;
+  scrollbar-width: none;
+  font-size: var(--fs-body);
+  line-height: 1.05;
+}
+.pagebody::-webkit-scrollbar { display: none; }
+.pagebody p { margin: 0 0 .35em; }
+.pagebody h2 {
+  margin: .5em 0 .15em;
+  font-size: 1.15em;
+  font-weight: normal;
+  border-bottom: var(--px) dotted var(--ink);
+}
+.pagebody h2:first-child { margin-top: 0; }
+.pagebody .meta { color: var(--ink-soft); }
+.pagebody a { color: inherit; text-decoration-thickness: 2px; text-underline-offset: .15em; }
+.tags { display: flex; flex-wrap: wrap; gap: .3em; list-style: none; margin: .2em 0 0; padding: 0; }
+.tags li { padding: 0 .3em; border: 2px solid var(--ink); }
+.scroll.none { visibility: hidden; }
+

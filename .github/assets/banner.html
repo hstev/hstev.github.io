@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<!--
+  Fuente del banner del README (1280×640, también sirve como social preview del repo).
+  Para regenerarlo, con Node 24:
+    npm run build && npx vite preview --port 4173 &
+    python3 -m http.server 4319 --directory .github/assets &
+    chrome --headless=new --hide-scrollbars --window-size=1280,728 --virtual-time-budget=9000 \
+      --screenshot=.github/assets/banner.png "http://localhost:4319/banner.html?site=http://localhost:4173/"
+    convert .github/assets/banner.png -crop 1280x640+0+0 +repage .github/assets/banner.png
+  (headless resta ~88 px de alto a la ventana; por eso 728 y luego se recorta a 640)
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Banner</title>
+<link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+<style>
+  :root { --lcd-1: #f8a85a; --lcd-2: #ec7c2c; --ink: #2b1306; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; width: 1280px; height: 640px; overflow: hidden; }
+  body {
+    position: relative;
+    font-family: 'VT323', monospace;
+    color: var(--lcd-1);
+    background:
+      radial-gradient(520px 420px at 1010px 330px, rgba(236,124,44,.28), transparent 70%),
+      var(--ink);
+  }
+  /* rejilla de píxeles, como el LCD */
+  body::before {
+    content: ""; position: absolute; inset: 0;
+    background:
+      repeating-linear-gradient(0deg, rgba(248,168,90,.05) 0 1px, transparent 1px 4px),
+      repeating-linear-gradient(90deg, rgba(248,168,90,.04) 0 1px, transparent 1px 4px);
+  }
+
+  .left { position: absolute; left: 88px; top: 0; bottom: 0; width: 640px; display: flex; flex-direction: column; justify-content: center; }
+  .logo { width: 560px; height: auto; shape-rendering: crispEdges; }
+  .logo rect { fill: var(--lcd-1); }
+  .name { margin: 34px 0 0; font-size: 54px; line-height: 1; }
+  .tag { margin: 14px 0 0; font-size: 34px; line-height: 1.1; color: rgba(248,168,90,.72); max-width: 26ch; }
+  .chips { display: flex; gap: 12px; margin-top: 28px; }
+  .chips span { padding: 2px 12px; font-size: 26px; border: 3px solid var(--lcd-1); }
+
+  /* smartphone */
+  .phone {
+    position: absolute; left: 862px; top: 16px;
+    width: 296px; height: 600px;
+    padding: 14px;
+    border-radius: 46px;
+    background: linear-gradient(145deg, #3a3a3e, #121214 60%);
+    box-shadow: 0 0 0 2px #55555b, 0 30px 60px rgba(0,0,0,.55), inset 0 0 0 2px #000;
+    transform: rotate(6deg);
+  }
+  .screen { position: relative; width: 100%; height: 100%; border-radius: 34px; overflow: hidden; background: #f39a4c; }
+  .screen iframe {
+    position: absolute; left: 0; top: 36px;
+    width: 390px; height: 780px; border: 0;
+    transform: scale(.6872); transform-origin: 0 0;
+  }
+  .island { position: absolute; left: 50%; top: 10px; width: 78px; height: 22px; margin-left: -39px; border-radius: 11px; background: #000; z-index: 2; }
+  /* toque en la tecla "Menu" */
+  .tap { position: absolute; right: 44px; bottom: 26px; width: 46px; height: 46px; border-radius: 50%; z-index: 2;
+         background: rgba(255,255,255,.35); box-shadow: 0 0 0 10px rgba(255,255,255,.18), 0 0 0 22px rgba(255,255,255,.08); }
+</style>
+</head>
+<body>
+  <div class="left">
+    <svg class="logo" id="logo" role="img" aria-label="//hstev"></svg>
+    <p class="name">Harol · System engineer</p>
+    <p class="tag">A retro Siemens-style phone OS portfolio. Fork it and make it yours.</p>
+    <div class="chips"><span>Vanilla JS</span><span>Vite</span><span>JSON content</span></div>
+  </div>
+
+  <div class="phone">
+    <div class="screen">
+      <div class="island"></div>
+      <iframe id="site" title="Portfolio" scrolling="no"></iframe>
+      <div class="tap"></div>
+    </div>
+  </div>
+
+<script>
+  // el portafolio servido (vite preview / dev)
+  const SITE = new URLSearchParams(location.search).get('site') || '/';
+  document.getElementById('site').src = SITE;
+
+  // misma fuente 5×7 que src/ui/pixel-font.js, con la H del banner
+  const GLYPHS = {
+    '/': ['....#', '...#.', '...#.', '..#..', '.#...', '.#...', '#....'],
+    'H': ['#...#', '#...#', '#...#', '#####', '#...#', '#...#', '#...#'],
+    'S': ['.####', '#....', '#....', '.###.', '....#', '....#', '####.'],
+    'T': ['#####', '..#..', '..#..', '..#..', '..#..', '..#..', '..#..'],
+    'E': ['#####', '#....', '#....', '####.', '#....', '#....', '#####'],
+    'V': ['#...#', '#...#', '#...#', '#...#', '#...#', '.#.#.', '..#..']
+  };
+  const chars = [...'//HSTEV'];
+  let rects = '';
+  chars.forEach((c, n) => GLYPHS[c].forEach((row, y) => [...row].forEach((px, x) => {
+    if (px === '#') rects += `<rect x="${n * 6 + x}" y="${y}" width="1" height="1"/>`;
+  })));
+  const logo = document.getElementById('logo');
+  logo.setAttribute('viewBox', `0 0 ${chars.length * 6 - 1} 7`);
+  logo.innerHTML = rects;
+</script>
+</body>
+</html>

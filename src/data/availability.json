@@ -1,0 +1,7 @@
+{
+  "vacation": { "level": 0, "name": "On vacation",                "detail": "Offline for a few days. I'll reply when I'm back." },
+  "busy":     { "level": 1, "name": "Busy",                       "detail": "Fully booked for now. Feel free to write anyway." },
+  "partial":  { "level": 2, "name": "Partially available",        "detail": "I have a few free hours a week." },
+  "side":     { "level": 3, "name": "Available for side projects", "detail": "Time for side projects or freelance work." },
+  "offer":    { "level": 4, "name": "Open to a job offer",        "detail": "Ready for my next full-time role." }
+}
